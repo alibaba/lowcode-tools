@@ -1,0 +1,45 @@
+{
+  "componentName": "Page",
+  "id": "node_dockcviv8fo1",
+  "props": {
+    "ref": "outerView",
+    "style": {
+      "height": "100%"
+    }
+  },
+  "fileName": "/",
+  "dataSource": {
+    "list": []
+  },
+  "state": {
+    "text": "outer",
+    "isShowDialog": false
+  },
+  "css": "body {font-size: 12px;} .button{width:100px;color:#ff00ff}",
+  "lifeCycles": {
+    "componentDidMount": {
+      "type": "JSFunction",
+      "value": "function() {\n    console.log('did mount');\n  }"
+    },
+    "componentWillUnmount": {
+      "type": "JSFunction",
+      "value": "function() {\n    console.log('will unmount');\n  }"
+    }
+  },
+  "methods": {
+    "testFunc": {
+      "type": "JSFunction",
+      "value": "function() {\n    console.log('test func');\n  }"
+    },
+    "onClick": {
+      "type": "JSFunction",
+      "value": "function() {\n    this.setState({\n      isShowDialog: true\n    })\n  }"
+    },
+    "closeDialog": {
+      "type": "JSFunction",
+      "value": "function() {\n    this.setState({\n      isShowDialog: false\n    })\n  }"
+    }
+  },
+  "children": [
+  ]
+}
