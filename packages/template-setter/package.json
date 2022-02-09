@@ -1,0 +1,21 @@
+{
+  "name": "@alilc/lowcode-template-setter",
+  "version": "1.0.0-beta.5",
+  "description": "Ali lowCode engine setter template",
+  "main": "index.js",
+  "scripts": {
+    "pub": "npm publish",
+    "beta": "npm publish --tag beta"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:guanghong.wsj/lowcode-tools.git",
+    "directory": "packages/template-setter"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "eternalsky",
+  "license": "ISC"
+}

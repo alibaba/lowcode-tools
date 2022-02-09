@@ -1,0 +1,21 @@
+{
+  "name": "@alilc/lowcode-template-plugin",
+  "version": "1.0.0-beta.3",
+  "description": "Ali lowCode engine plugin template",
+  "main": "index.js",
+  "scripts": {
+    "pub": "npm publish",
+    "beta": "npm publish --tag beta"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:guanghong.wsj/lowcode-tools.git",
+    "directory": "packages/template-plugin"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "eternalsky",
+  "license": "ISC"
+}

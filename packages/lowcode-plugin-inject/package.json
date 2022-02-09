@@ -1,0 +1,41 @@
+{
+  "name": "@alilc/lowcode-plugin-inject",
+  "author": "ens",
+  "version": "1.0.0-beta.4",
+  "description": "lowcode-plugin-inject",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "README": "README.md",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "build-scripts start",
+    "build": "build-scripts build",
+    "prepublishOnly": "npm run build",
+    "beta": "npm publish --tag beta",
+    "pub": "npm publish"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@alifd/next": "^1.25.13",
+    "@alilc/lowcode-engine": "beta",
+    "@alilc/lowcode-utils": "beta",
+    "case": "^1.6.3",
+    "fetch-jsonp": "^1.2.1",
+    "query-string": "^7.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0"
+  },
+  "devDependencies": {
+    "@alilc/build-plugin-alt": "beta",
+    "@alib/build-scripts": "^0.1.32",
+    "@alifd/theme-lowcode-light": "^0.2.1",
+    "@recore/config": "^2.0.6",
+    "@types/react": "^16.0.3",
+    "build-plugin-fusion": "^0.1.19"
+  },
+  "license": "MIT"
+}
