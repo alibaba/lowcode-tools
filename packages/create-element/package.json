@@ -19,8 +19,8 @@
     "url": "git@gitlab.alibaba-inc.com:guanghong.wsj/lowcode-tools.git",
     "directory": "packages/create-ali-lowcode"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "eternalsky",
+  "license": "MIT",
   "dependencies": {
     "case": "^1.6.3",
     "chalk": "^4.1.2",
