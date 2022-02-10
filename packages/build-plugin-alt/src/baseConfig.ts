@@ -26,6 +26,7 @@ export default (config: WebpackChain, { rootDir, entry, type }: IOptions) => {
     localesToKeep: ['en', 'zh-cn']
   }]);
 
+
   // config.resolve.modules
   //   .add(path.join(rootDir, 'node_modules'))
   //   .add('node_modules')
@@ -51,4 +52,10 @@ export default (config: WebpackChain, { rootDir, entry, type }: IOptions) => {
     "@alilc/lowcode-designer": "var window.AliLowCodeEngine.common.designerCabin",
   });
 
+  config.module.rule('mjs2js')
+    .test(/\.mjs$/)
+    .include
+    .add(/node_modules/)
+    .end()
+    .type('javascript/auto');
 }
