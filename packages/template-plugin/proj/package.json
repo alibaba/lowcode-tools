@@ -15,7 +15,8 @@
     "pub": "npm publish"
   },
   "publishConfig": {
-    "registry": "http://registry.npm.alibaba-inc.com"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {},
   "peerDependencies": {
