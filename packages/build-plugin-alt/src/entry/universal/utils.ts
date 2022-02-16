@@ -44,7 +44,7 @@ export const resetSchema = async () => {
   Message.success('成功重置页面');
 }
 
-export const getPageSchema = async () => {
+export const getPageSchema = async (type) => {
   const schema = JSON.parse(
     window.localStorage.getItem(SAVE_KEY) || '{}'
   );
@@ -54,7 +54,13 @@ export const getPageSchema = async () => {
   if (pageSchema) {
     return pageSchema;
   }
-  return await request('./schema.json');
+  const initialSchema =  await request('./schema.json');
+  if (type === 'setter') {
+    initialSchema.children.push({
+      "componentName": "BuiltInComp",
+    })
+  }
+  return initialSchema;
 };
 
 function request(

@@ -45,8 +45,10 @@ export default async ({ type }) => {
 
           (assets as any).components.unshift({
             componentName: COMP_NAME,
+            category: '调试用',
+            group: '调试用',
             title: COMP_TITLE,
-            icon: "https://img.alicdn.com/tfs/TB1rT0gPQL0gK0jSZFAXXcA9pXa-200-200.svg",
+            icon: "https://img.alicdn.com/imgextra/i1/O1CN01m4IZ481VKPwFFbDhP_!!6000000002634-2-tps-112-112.png",
             docUrl: "",
             screenshot: "",
             npm: {
@@ -58,6 +60,17 @@ export default async ({ type }) => {
                 name: "custom",
                 title: "内容",
                 propType: "string"
+              }
+            ],
+            snippets: [
+              {
+                title: "调试用内置组件",
+                screenshot: "https://img.alicdn.com/imgextra/i1/O1CN01m4IZ481VKPwFFbDhP_!!6000000002634-2-tps-112-112.png",
+                schema: {
+                  componentName: COMP_NAME,
+                  props: {
+                  }
+                }
               }
             ],
             configure: {
@@ -73,41 +86,20 @@ export default async ({ type }) => {
               }
             }
           });
-
-          // (assets as any).componentList.unshift({
-          //   title: '内置',
-          //   children: [
-          //     {
-          //       componentName: COMP_NAME,
-          //       title: COMP_TITLE,
-          //       snippets: [
-          //         {
-          //           title: "主要",
-          //           screenshot: "https://alifd.oss-cn-hangzhou.aliyuncs.com/fusion-cool/icons/icon-light/ic_light_button.png",
-          //           schema: {
-          //             componentName: COMP_NAME,
-          //             props: {
-          //             }
-          //           }
-          //         }
-          //       ]
-          //     },
-          //   ]
-          // })
         }
 
         // 设置物料描述
         const { material, project } = ctx;
         material.setAssets(assets);
 
-        const schema = await getPageSchema();
+        const schema = await getPageSchema(type);
 
         // 加载 schema
         project.openDocument(schema);
       },
     };
   };
-  editorInit.pluginName= 'editorInit';
+  editorInit.pluginName = 'editorInit';
 
   await plugins.register(editorInit);
 
@@ -226,18 +218,18 @@ export default async ({ type }) => {
             onClick={saveSchema}
           >保存到本地</button>
         });
-        ctx.skeleton.add({
-          name: 'resetSchema',
-          area: 'topArea',
-          type: 'Widget',
-          props: {
-            align: 'right',
-          },
-          content: <button
-            className='save-sample'
-            onClick={resetSchema}
-          >重置页面</button>
-        });
+        // ctx.skeleton.add({
+        //   name: 'resetSchema',
+        //   area: 'topArea',
+        //   type: 'Widget',
+        //   props: {
+        //     align: 'right',
+        //   },
+        //   content: <button
+        //     className='save-sample'
+        //     onClick={resetSchema}
+        //   >重置页面</button>
+        // });
         ctx.hotkey.bind('command+s', (e) => {
           e.preventDefault();
           saveSchema();
