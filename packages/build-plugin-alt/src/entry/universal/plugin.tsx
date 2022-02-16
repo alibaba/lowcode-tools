@@ -11,6 +11,7 @@ import ZhEn from '@alilc/lowcode-plugin-zh-en';
 import SchemaPlugin from '@alilc/lowcode-plugin-schema';
 import CodeEditor from "@alilc/lowcode-plugin-code-editor";
 import { getPageSchema, saveSchema, resetSchema, preview } from './utils';
+import assets from '../../public/assets.json';
 
 
 export default async ({ type }) => {
@@ -25,11 +26,6 @@ export default async ({ type }) => {
     return {
       name: 'editor-init',
       async init() {
-        const assets = await (
-          await fetch(
-            `https://dailyfusion.alicdn.com/assets-daily/@alife/mc-assets-2485@0.1.94/assets.json?t=${Date.now()}`
-          )
-        ).json();
 
         if (type === 'setter') {
           const COMP_NAME = "BuiltInComp";
@@ -78,26 +74,26 @@ export default async ({ type }) => {
             }
           });
 
-          (assets as any).componentList.unshift({
-            title: '内置',
-            children: [
-              {
-                componentName: COMP_NAME,
-                title: COMP_TITLE,
-                snippets: [
-                  {
-                    title: "主要",
-                    screenshot: "https://alifd.oss-cn-hangzhou.aliyuncs.com/fusion-cool/icons/icon-light/ic_light_button.png",
-                    schema: {
-                      componentName: COMP_NAME,
-                      props: {
-                      }
-                    }
-                  }
-                ]
-              },
-            ]
-          })
+          // (assets as any).componentList.unshift({
+          //   title: '内置',
+          //   children: [
+          //     {
+          //       componentName: COMP_NAME,
+          //       title: COMP_TITLE,
+          //       snippets: [
+          //         {
+          //           title: "主要",
+          //           screenshot: "https://alifd.oss-cn-hangzhou.aliyuncs.com/fusion-cool/icons/icon-light/ic_light_button.png",
+          //           schema: {
+          //             componentName: COMP_NAME,
+          //             props: {
+          //             }
+          //           }
+          //         }
+          //       ]
+          //     },
+          //   ]
+          // })
         }
 
         // 设置物料描述

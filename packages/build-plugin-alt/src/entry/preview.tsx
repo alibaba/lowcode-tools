@@ -3,21 +3,20 @@ import React, { useState } from 'react';
 import Loading from '@alifd/next/lib/loading';
 import { buildComponents, assetBundle, AssetList, AssetLevel, AssetLoader } from '@alilc/lowcode-utils';
 import ReactRenderer from '@alilc/lowcode-react-renderer';
+import { SAVE_KEY } from './universal/utils';
 
 const SamplePreview = () => {
   const [data, setData] = useState({} as any);
 
   async function init() {
-    const assets = await (await fetch('https://unpkg.alibaba-inc.com/@ali/ali-lowcode-materials/dist/assets.json')).json();
-    const { packages } = assets;
-    const projectSchema = JSON.parse(window.localStorage.getItem('projectSchema')!);
+    const packages = JSON.parse(window.localStorage.getItem('packages') || '');
+    const projectSchema = JSON.parse(window.localStorage.getItem(SAVE_KEY)!);
     const { componentsMap: componentsMapArray, componentsTree } = projectSchema;
     const componentsMap: any = {};
     componentsMapArray.forEach((component: any) => {
       componentsMap[component.componentName as string] = component;
     });
     const schema = componentsTree[0];
-    console.info('assets is :', assets);
     console.info('componentsMap is :', componentsMapArray);
     console.info('schema from storage is :', schema);
 
