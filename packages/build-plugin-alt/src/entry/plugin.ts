@@ -6,7 +6,7 @@ import './universal/global.scss';
 
 (async () => {
   await plugins.register(DemoPlugin);
-  await basePlugin({ type: 'plugin' });
+  await basePlugin({ type: 'plugin', demoPlugin: DemoPlugin });
 
   init(document.getElementById('lce-container'), {
     enableCondition: true,

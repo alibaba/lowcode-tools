@@ -1,18 +1,17 @@
 # Changelog
 
-## 1.3.0
-- `feat` 适配注入调试组件、setter
+## 1.0.3
 
-## 1.2.2
-- `feat` 适配注入调试插件
+- `feat` 适配内置插件的新用法，支持本地调试内置插件 
 
-## 1.2.1
-- `fix` 适配新的 babelCompiler 入参
+## 1.0.2
 
-## 1.2.0
+- `fix` 本地调试 setter 内置调试组件不渲染
 
-- `feat` 支持 setter 注入调试
+## 1.0.2
 
-## 1.1.0
+- `fix` 本地调试依赖陈旧 & 预览 schema 获取不对
 
-- `feat` 支持 plugin 注入调试
+## 1.0.0
+
+- `feat` first version
