@@ -1,6 +1,6 @@
 import { material, project } from '@alilc/lowcode-engine';
 import { Message } from '@alifd/next';
-const SAVE_KEY = `projectSchema_${PACKAGE_NAME}`;
+export const SAVE_KEY = `projectSchema_${PACKAGE_NAME}`;
 console.log(SAVE_KEY);
 
 export const preview = () => {

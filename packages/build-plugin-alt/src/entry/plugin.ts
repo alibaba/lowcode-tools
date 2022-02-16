@@ -15,8 +15,8 @@ import './universal/global.scss';
     disableDefaultSetters: false,
     stayOnTheSameSettingTab: false,
     simulatorUrl: [
-      'https://unpkg.com/@alilc/lowcode-react-simulator-renderer@beta/dist/js/react-simulator-renderer.js',
-      'https://unpkg.com/@alilc/lowcode-react-simulator-renderer@beta/dist/css/react-simulator-renderer.css'
+      'https://cdn.jsdelivr.net/npm/@alilc/lowcode-react-simulator-renderer@^1.0.0/dist/js/react-simulator-renderer.js',
+      'https://cdn.jsdelivr.net/npm/@alilc/lowcode-react-simulator-renderer@^1.0.0/dist/css/react-simulator-renderer.css'
     ],
   });
 

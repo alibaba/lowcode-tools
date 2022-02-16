@@ -1,5 +1,5 @@
 {
-  "version": "1.1.13",
+  "version": "1.0.0",
   "packages": [
     {
       "package": "moment",
@@ -10,12 +10,20 @@
       "library": "moment"
     },
     {
+      "package": "lodash",
+      "version": "4.6.1",
+      "library": "_",
+      "urls": [
+        "https://g.alicdn.com/platform/c/lodash/4.6.1/lodash.min.js"
+      ]
+    },
+    {
       "title": "fusion组件库",
       "package": "@alifd/next",
-      "version": "1.23.0",
+      "version": "1.24.18",
       "urls": [
-        "https://g.alicdn.com/code/lib/alifd__next/1.23.18/next.min.css",
-        "https://g.alicdn.com/code/lib/alifd__next/1.23.18/next-with-locales.min.js"
+        "https://g.alicdn.com/code/lib/alifd__next/1.24.18/next.min.css",
+        "https://g.alicdn.com/code/lib/alifd__next/1.24.18/next-with-locales.min.js"
       ],
       "library": "Next"
     },
@@ -30,400 +38,104 @@
       "library": "NextTable"
     },
     {
-      "title": "AliLowCodeComponents",
-      "package": "@alifd/ali-lowcode-components",
+      "package": "@alilc/lowcode-materials",
       "version": "latest",
+      "library": "AlilcLowcodeMaterials",
       "urls": [
-        "https://gw.alipayobjects.com/os/lib/alifd/ali-lowcode-components/0.1.4/dist/ali-lowcode-components.js",
-        "https://gw.alipayobjects.com/os/lib/alifd/ali-lowcode-components/0.1.4/dist/ali-lowcode-components.css"
+        "https://alifd.alicdn.com/npm/@alilc/lowcode-materials/dist/AlilcLowcodeMaterials.js",
+        "https://alifd.alicdn.com/npm/@alilc/lowcode-materials/dist/AlilcLowcodeMaterials.css"
       ],
-      "library": "AliLowCodeComponents"
+      "editUrls": [
+        "https://alifd.alicdn.com/npm/@alilc/lowcode-materials/build/lowcode/view.js",
+        "https://alifd.alicdn.com/npm/@alilc/lowcode-materials/build/lowcode/view.css"
+      ]
     },
     {
-      "title": "BizCharts",
-      "package": "bizcharts",
-      "version": "4.1.11",
+      "package": "@alifd/pro-layout",
+      "version": "1.0.1-beta.1",
+      "library": "AlifdProLayout",
       "urls": [
-        "https://g.alicdn.com/code/lib/bizcharts/4.1.11/BizCharts.min.js"
+        "https://alifd.alicdn.com/npm/@alifd/pro-layout@1.0.1-beta.1/dist/AlifdProLayout.js",
+        "https://alifd.alicdn.com/npm/@alifd/pro-layout@1.0.1-beta.1/dist/AlifdProLayout.css"
       ],
-      "library": "BizCharts"
+      "editUrls": [
+        "https://alifd.alicdn.com/npm/@alifd/pro-layout@1.0.1-beta.1/build/lowcode/view.js",
+        "https://alifd.alicdn.com/npm/@alifd/pro-layout@1.0.1-beta.1/build/lowcode/view.css"
+      ]
     },
     {
-      "title": "Container",
-      "package": "@alife/container",
-      "version": "0.3.7",
+      "package": "@alifd/fusion-ui",
+      "version": "1.0.1",
+      "library": "AlifdFusionUi",
       "urls": [
-        "https://g.alicdn.com/fusion-design/auto-layout/0.3.7/dist/container.css",
-        "https://g.alicdn.com/fusion-design/auto-layout/0.3.7/dist/container.js"
+        "https://alifd.alicdn.com/npm/@alifd/fusion-ui@1.0.2/dist/AlifdFusionUi.js",
+        "https://alifd.alicdn.com/npm/@alifd/fusion-ui@1.0.2/dist/AlifdFusionUi.css"
       ],
-      "library": "Container"
+      "editUrls": [
+        "https://alifd.alicdn.com/npm/@alifd/fusion-ui@1.0.2/build/lowcode/view.js",
+        "https://alifd.alicdn.com/npm/@alifd/fusion-ui@1.0.2/build/lowcode/view.css"
+      ]
     }
   ],
   "components": [
-    
     {
-      "componentName": "Button",
-      "title": "按钮",
-      "icon": "https://img.alicdn.com/tfs/TB1rT0gPQL0gK0jSZFAXXcA9pXa-200-200.svg",
-      "docUrl": "",
-      "screenshot": "",
+      "exportName": "AlilcLowcodeMaterialsMeta",
       "npm": {
-        "package": "@alifd/next",
-        "version": "1.23.x",
-        "exportName": "Button",
-        "main": "",
-        "destructuring": true,
-        "subName": ""
+        "package": "@alilc/lowcode-materials"
       },
-      "props": [
-        {
-          "name": "children",
-          "title": "内容",
-          "propType": "string"
-        },
-        {
-          "name": "icon",
-          "propType": "string",
-          "description": "自定义内联样式"
-        },
-        {
-          "name": "type",
-          "title": {
-            "label": {
-              "type": "i18n",
-              "zh_CN": "按钮类型",
-              "en_US": "Button Type"
-            },
-            "tip": {
-              "type": "i18n",
-              "zh_CN": "属性: type | 说明: 按钮类型",
-              "en_US": "prop: type | description: button type"
-            }
-          },
-          "propType": {
-            "type": "oneOf",
-            "value": [
-              "primary",
-              "secondary",
-              "normal"
-            ]
-          },
-          "description": "按钮的类型",
-          "defaultValue": "normal"
-        },
-        {
-          "name": "size",
-          "title": {
-            "label": {
-              "type": "i18n",
-              "zh_CN": "按钮尺寸",
-              "en_US": "Button Size"
-            },
-            "tip": {
-              "type": "i18n",
-              "zh_CN": "属性: size | 说明: 按钮尺寸",
-              "en_US": "prop: size | description: button size"
-            }
-          },
-          "propType": {
-            "type": "oneOf",
-            "value": [
-              "small",
-              "medium",
-              "large"
-            ]
-          },
-          "description": "按钮的尺寸",
-          "defaultValue": "medium"
-        },
-        {
-          "name": "iconSize",
-          "title": {
-            "label": {
-              "type": "i18n",
-              "zh_CN": "图标尺寸",
-              "en_US": "Icon Size"
-            },
-            "tip": {
-              "type": "i18n",
-              "zh_CN": "属性: iconSize | 说明: 图标尺寸",
-              "en_US": "prop: iconSize | description: icon size"
-            }
-          },
-          "propType": {
-            "type": "oneOf",
-            "value": [
-              "xxs",
-              "xs",
-              "small",
-              "medium",
-              "large",
-              "xl",
-              "xxl",
-              "xxxl"
-            ]
-          },
-          "defaultValue": "small",
-          "description": "按钮中 Icon 的尺寸，用于替代 Icon 的默认大小"
-        },
-        {
-          "name": "ghost",
-          "title": {
-            "type": "i18n",
-            "zh_CN": "幽灵按钮",
-            "en_US": "ghost"
-          },
-          "propType": {
-            "type": "oneOf",
-            "value": [
-              true,
-              false,
-              "light",
-              "dark"
-            ]
-          },
-          "description": "是否为幽灵按钮",
-          "defaultValue": false
-        },
-        {
-          "name": "loading",
-          "title": "loading",
-          "propType": "bool",
-          "description": "设置按钮的载入状态",
-          "defaultValue": false
-        },
-        {
-          "name": "text",
-          "title": {
-            "type": "i18n",
-            "zh_CN": "文本按钮",
-            "en_US": "text"
-          },
-          "propType": "bool",
-          "description": "是否为文本按钮",
-          "defaultValue": false
-        },
-        {
-          "name": "warning",
-          "title": "warning",
-          "propType": "bool",
-          "description": "是否为警告按钮",
-          "defaultValue": false
-        },
-        {
-          "name": "disabled",
-          "title": {
-            "type": "i18n",
-            "zh_CN": "禁用",
-            "en_US": "disabled"
-          },
-          "propType": "bool",
-          "description": "是否禁用",
-          "defaultValue": false
-        },
-        {
-          "name": "onClick",
-          "title": "onClick",
-          "propType": "func",
-          "description": "点击按钮的回调\n@param {Object} e Event Object"
-        },
-        {
-          "name": "className",
-          "propType": "string"
-        },
-        {
-          "name": "onMouseUp",
-          "propType": "func"
-        },
-        {
-          "name": "style",
-          "propType": "object",
-          "description": "自定义内联样式"
-        }
-      ],
-      "configure": {
-        "props": {
-          "isExtends": true,
-          "override": [
-            {
-              "name": "icon",
-              "title": {
-                "label": {
-                  "type": "i18n",
-                  "zh_CN": "图标",
-                  "en_US": "Icon"
-                },
-                "tip": {
-                  "type": "i18n",
-                  "zh_CN": "属性: icon | 说明: 图标类型",
-                  "en_US": "prop: icon | description: icon type"
-                }
-              },
-              "setter": "IconSetter",
-              "setValue": {
-                "type": "JSFunction",
-                "value": "(target, value) => {\n            target.nodes[0].children.import(value && {\"componentName\": \"Icon\", \"props\": {\"type\": value, \"style\": {\"marginRight\": 5}}}, true);\n          }"
-              }
-            },
-            {
-              "name": "ghost",
-              "title": {
-                "type": "i18n",
-                "zh_CN": "幽灵按钮",
-                "en_US": "ghost"
-              },
-              "setter": {
-                "componentName": "RadioGroupSetter",
-                "props": {
-                  "options": [
-                    {
-                      "title": "True",
-                      "value": true
-                    },
-                    {
-                      "title": "False",
-                      "value": false
-                    },
-                    {
-                      "title": "Light",
-                      "value": "light"
-                    },
-                    {
-                      "title": "Dark",
-                      "value": "dark"
-                    }
-                  ]
-                }
-              },
-              "description": "是否为幽灵按钮",
-              "defaultValue": false
-            },
-            {
-              "name": "children",
-              "title": {
-                "label": {
-                  "type": "i18n",
-                  "zh_CN": "按钮内容",
-                  "en_US": "Content"
-                },
-                "tip": {
-                  "type": "i18n",
-                  "zh_CN": "属性: children | 说明: 按钮文本",
-                  "en_US": "prop: children | description: button content"
-                }
-              },
-              "setter": {
-                "componentName": "MixedSetter",
-                "props": {
-                  "setters": [
-                    "StringSetter",
-                    "ExpressionSetter"
-                  ]
-                }
-              }
-            }
-          ]
-        }
-      },
-      "category": "常用"
+      "url": "https://alifd.alicdn.com/npm/@alilc/lowcode-materials/build/lowcode/meta.js",
+      "urls": {
+        "default": "https://alifd.alicdn.com/npm/@alilc/lowcode-materials/build/lowcode/meta.js",
+        "design": "https://alifd.alicdn.com/npm/@alilc/lowcode-materials/build/lowcode/meta.design.js"
+      }
     },
     {
-      "componentName": "Div",
-      "title": "Div",
-      "configure": {
-        "component": {
-          "isContainer": true
-        }
+      "exportName": "AlifdProLayoutMeta",
+      "npm": {
+        "package": "@alifd/pro-layout",
+        "version": "1.0.1-beta.1"
       },
-      "category": "基础"
+      "url": "https://alifd.alicdn.com/npm/@alifd/pro-layout@1.0.1-beta.1/build/lowcode/meta.js",
+      "urls": {
+        "default": "https://alifd.alicdn.com/npm/@alifd/pro-layout@1.0.1-beta.1/build/lowcode/meta.js",
+        "design": "https://alifd.alicdn.com/npm/@alifd/pro-layout@1.0.1-beta.1/build/lowcode/meta.design.js"
+      }
     },
     {
-      "componentName": "Page",
-      "title": "页面",
-      "props": [
-        {
-          "name": "style",
-          "propType": "object",
-          "defaultValue": {
-            "padding": 12
-          }
-        }
-      ],
-      "configure": {
-        "supports": {
-          "style": true
-        },
-        "component": {
-          "isContainer": true,
-          "disableBehaviors": "*",
-          "nestingRule": {
-            "childWhitelist": [
-              "NextPage"
-            ]
-          }
-        }
+      "exportName": "AlifdFusionUiMeta",
+      "npm": {
+        "package": "@alifd/fusion-ui"
       },
-      "category": "基础"
+      "url": "https://alifd.alicdn.com/npm/@alifd/fusion-ui@1.0.2/build/lowcode/meta.js",
+      "urls": {
+        "default": "https://alifd.alicdn.com/npm/@alifd/fusion-ui@1.0.2/build/lowcode/meta.js",
+        "design": "https://alifd.alicdn.com/npm/@alifd/fusion-ui@1.0.2/build/lowcode/meta.design.js"
+      }
     }
   ],
-  "componentList": [
-    {
-      "title": "常用",
-      "icon": "",
-      "children": [
-        {
-          "componentName": "Button",
-          "library": "Next",
-          "title": "按钮",
-          "icon": "",
-          "snippets": [
-            {
-              "title": "主要",
-              "screenshot": "https://alifd.oss-cn-hangzhou.aliyuncs.com/fusion-cool/icons/icon-light/ic_light_button.png",
-              "schema": {
-                "componentName": "Button",
-                "props": {
-                  "prefix": "next-",
-                  "type": "primary",
-                  "size": "medium",
-                  "htmlType": "button",
-                  "component": "button",
-                  "children": "取消"
-                }
-              }
-            },
-            {
-              "title": "次要",
-              "screenshot": "https://img.alicdn.com/tfs/TB1a.N1uVT7gK0jSZFpXXaTkpXa-112-64.png",
-              "schema": {
-                "componentName": "Button",
-                "props": {
-                  "type": "secondary",
-                  "size": "medium",
-                  "htmlType": "button",
-                  "component": "button",
-                  "children": "提交"
-                }
-              }
-            },
-            {
-              "title": "分隔按钮",
-              "screenshot": "https://alifd.oss-cn-hangzhou.aliyuncs.com/fusion-cool/icons/icon-light/ic_light_split-button.png",
-              "schema": {
-                "componentName": "SplitButton",
-                "props": {
-                  "prefix": "next-",
-                  "type": "normal",
-                  "size": "medium",
-                  "defaultSelectedKeys": [],
-                  "autoWidth": true,
-                  "popupTriggerType": "click"
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "sort": {
+    "groupList": [
+      "精选组件",
+      "原子组件"
+    ],
+    "categoryList": [
+      "基础元素",
+      "布局容器类",
+      "表格类",
+      "表单详情类",
+      "帮助类",
+      "对话框类",
+      "业务类",
+      "通用",
+      "引导",
+      "信息输入",
+      "信息展示",
+      "信息反馈"
+    ]
+  },
+  "groupList": [
+    "精选组件",
+    "原子组件"
+  ],
+  "ignoreComponents": {}
 }
