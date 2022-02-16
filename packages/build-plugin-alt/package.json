@@ -1,6 +1,6 @@
 {
   "name": "@alilc/build-plugin-alt",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0",
   "description": "build-scripts plugin template for developers",
   "main": "lib/index.js",
   "files": [
@@ -19,7 +19,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@alilc/lowcode-engine": "beta",
+    "@alilc/lowcode-engine": "^1.0.0",
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.1",
     "@types/koa__router": "^8.0.10",
@@ -43,13 +43,13 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "@alilc/lowcode-plugin-code-editor": "latest",
-    "@alilc/lowcode-plugin-components-pane": "latest",
-    "@alilc/lowcode-plugin-schema": "latest",
+    "@alilc/lowcode-plugin-code-editor": "^1.0.0",
+    "@alilc/lowcode-plugin-components-pane": "^1.0.0",
+    "@alilc/lowcode-plugin-schema": "beta",
     "@alilc/lowcode-plugin-undo-redo": "beta",
     "@alilc/lowcode-plugin-zh-en": "beta",
-    "@alilc/lowcode-react-renderer": "beta",
-    "@alilc/lowcode-utils": "beta",
+    "@alilc/lowcode-react-renderer": "^1.0.0",
+    "@alilc/lowcode-utils": "^1.0.0",
     "@babel/template": "^7.16.7",
     "@babel/traverse": "^7.16.10",
     "@babel/types": "^7.16.8",
