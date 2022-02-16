@@ -14,12 +14,21 @@ import { getPageSchema, saveSchema, resetSchema, preview } from './utils';
 import assets from '../../public/assets.json';
 
 
-export default async ({ type }) => {
+export default async ({ type, demoPlugin = undefined }) => {
+
+  const registerPlugin = async (plugin) => {
+    if (!demoPlugin) {
+      return plugin;
+    }
+    if (plugin.pluginName !== demoPlugin.pluginName) {
+      await plugins.register(plugin);
+    }
+  }
   // plugin API 见 https://yuque.antfin.com/ali-lowcode/docs/cdukce
   (SchemaPlugin as any).pluginName = 'SchemaPlugin';
-  await plugins.register(SchemaPlugin);
+  await registerPlugin(SchemaPlugin);
   (CodeEditor as any).pluginName = 'CodeEditor';
-  await plugins.register(CodeEditor);
+  await registerPlugin(CodeEditor);
 
   const editorInit = (ctx: ILowCodePluginContext) => {
 
@@ -101,7 +110,7 @@ export default async ({ type }) => {
   };
   editorInit.pluginName = 'editorInit';
 
-  await plugins.register(editorInit);
+  await registerPlugin(editorInit);
 
   const builtinPluginRegistry = (ctx: ILowCodePluginContext) => {
     return {
@@ -124,18 +133,6 @@ export default async ({ type }) => {
           },
         });
 
-        // 注册回退/前进
-        skeleton.add({
-          area: 'topArea',
-          type: 'Widget',
-          name: 'undoRedo',
-          content: UndoRedo,
-          props: {
-            align: 'right',
-            width: 88,
-          },
-        });
-
         // 注册组件面板
         skeleton.add({
           area: 'leftArea',
@@ -149,25 +146,12 @@ export default async ({ type }) => {
             description: '组件库',
           },
         });
-
-        // 注册中英文面板
-        skeleton.add({
-          area: 'leftArea',
-          type: 'Widget',
-          name: 'zhEn',
-          content: ZhEn,
-          contentProps: {},
-          props: {
-            align: 'bottom',
-          },
-        });
-
       },
     };
   }
   builtinPluginRegistry.pluginName = 'builtinPluginRegistry';
 
-  await plugins.register(builtinPluginRegistry);
+  await registerPlugin(builtinPluginRegistry);
 
   // 将新版本setter覆盖内置引擎setter (新版本部分setter处于内测状态，如果有问题可以将该插件注册移除，或者联系@度城)
   const setterRegistry = (ctx: ILowCodePluginContext) => {
@@ -199,7 +183,12 @@ export default async ({ type }) => {
     }
   }
   setterRegistry.pluginName = 'setterRegistry';
-  await plugins.register(setterRegistry);
+  await registerPlugin(setterRegistry);
+
+  // 注册回退/前进
+  await registerPlugin(UndoRedo);
+  // 注册中英文切换
+  await registerPlugin(ZhEn);
 
   // 注册保存面板
   const saveSample = (ctx: ILowCodePluginContext) => {
@@ -238,7 +227,7 @@ export default async ({ type }) => {
     };
   }
   saveSample.pluginName = 'saveSample';
-  await plugins.register(saveSample);
+  await registerPlugin(saveSample);
 
   const previewSample = (ctx: ILowCodePluginContext) => {
     return {
@@ -262,6 +251,6 @@ export default async ({ type }) => {
 
   previewSample.pluginName = 'previewSample';
 
-  await plugins.register(previewSample);
+  await registerPlugin(previewSample);
 }
 
