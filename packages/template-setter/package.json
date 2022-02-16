@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-template-setter",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0",
   "description": "Ali lowCode engine setter template",
   "main": "index.js",
   "scripts": {

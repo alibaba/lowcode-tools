@@ -40,7 +40,7 @@ export default class InitFunc {
   }
   installTpl() {
     fs.ensureDirSync(this.installPath);
-    spawn.sync('npm', ['install', `${this.templatePkg}@beta`], { stdio: 'inherit', cwd: this.installPath });
+    spawn.sync('npm', ['install', `${this.templatePkg}`], { stdio: 'inherit', cwd: this.installPath });
   }
 
   renderTpl() {
