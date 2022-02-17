@@ -1,4 +1,4 @@
-# uipass setter template
+# lowcode setter template
 
 ---
 

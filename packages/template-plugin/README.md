@@ -1,4 +1,4 @@
-# uipass plugin template
+# lowcode plugin template
 
 ---
 
