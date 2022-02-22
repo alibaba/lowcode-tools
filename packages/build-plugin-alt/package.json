@@ -1,6 +1,6 @@
 {
   "name": "@alilc/build-plugin-alt",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "build-scripts plugin template for developers",
   "main": "lib/index.js",
   "files": [
@@ -45,9 +45,9 @@
   "dependencies": {
     "@alilc/lowcode-plugin-code-editor": "^1.0.0",
     "@alilc/lowcode-plugin-components-pane": "^1.0.0",
-    "@alilc/lowcode-plugin-schema": "beta",
-    "@alilc/lowcode-plugin-undo-redo": "beta",
-    "@alilc/lowcode-plugin-zh-en": "beta",
+    "@alilc/lowcode-plugin-schema": "^1.0.0",
+    "@alilc/lowcode-plugin-undo-redo": "^1.0.0",
+    "@alilc/lowcode-plugin-zh-en": "^1.0.0",
     "@alilc/lowcode-react-renderer": "^1.0.0",
     "@alilc/lowcode-utils": "^1.0.0",
     "@babel/template": "^7.16.7",
