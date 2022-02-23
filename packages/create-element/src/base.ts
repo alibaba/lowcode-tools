@@ -40,7 +40,7 @@ export default class InitFunc {
   }
   installTpl() {
     fs.ensureDirSync(this.installPath);
-    spawn.sync('npm', ['install', `${this.templatePkg}`], { stdio: 'inherit', cwd: this.installPath });
+    spawn.sync('npm', ['install', `${this.templatePkg}`, '--no-save', '--no-package-lock', '--no-shrinkwrap'], { stdio: 'inherit', cwd: this.installPath });
   }
 
   renderTpl() {
@@ -74,8 +74,16 @@ export default class InitFunc {
     });
   }
 
+  initInstallPathPackageJson() {
+    const pkgPath = path.join(this.installPath, 'package.json');
+    const isExist = fs.pathExistsSync(pkgPath);
+    if (isExist) return;
+    fs.writeFileSync(pkgPath, JSON.stringify({ private: true }, null, ' '));
+  }
+
   init() {
     console.log(chalk.green('正在为你初始化项目，请稍等...'))
+    this.initInstallPathPackageJson();
     this.installTpl();
     this.renderTpl();
   }
