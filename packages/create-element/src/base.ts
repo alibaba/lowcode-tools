@@ -38,8 +38,10 @@ export default class InitFunc {
       dot: true,
     }).length === 0;
   }
-  installTpl() {
+  ensureInstallPath() {
     fs.ensureDirSync(this.installPath);
+  }
+  installTpl() {
     spawn.sync('npm', ['install', `${this.templatePkg}`, '--no-save', '--no-package-lock', '--no-shrinkwrap'], { stdio: 'inherit', cwd: this.installPath });
   }
 
@@ -82,7 +84,8 @@ export default class InitFunc {
   }
 
   init() {
-    console.log(chalk.green('正在为你初始化项目，请稍等...'))
+    console.log(chalk.green('正在为你初始化项目，请稍等...'));
+    this.ensureInstallPath();
     this.initInstallPathPackageJson();
     this.installTpl();
     this.renderTpl();
