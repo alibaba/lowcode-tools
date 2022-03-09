@@ -51,6 +51,7 @@ export default async (answers) => {
     answers: {
       ...result,
       ...answers,
+      engineScope: '@alilc',
     },
     templatePkg: `@alifd/${result.packageType}-component-template`,
     prefix: 'lowcode-setter',
