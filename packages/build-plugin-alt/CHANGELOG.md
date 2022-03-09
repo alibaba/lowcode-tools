@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- `feat` 本地调试兼容性依赖 lowcode-engine
+
 ## 1.0.3
 
 - `feat` 适配内置插件的新用法，支持本地调试内置插件 
