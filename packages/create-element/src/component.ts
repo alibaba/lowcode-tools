@@ -31,16 +31,16 @@ export default async (answers) => {
     name: 'packageType',
     message: '请选择包模式',
     choices: [{
-      name: 'pc-单包模式',
+      name: 'react-单组件',
       value: 'pc-single',
     }, {
-      name: 'pc-多包模式',
+      name: 'react-组件库',
       value: 'pc-multiple',
     }, {
-      name: '跨端-单包模式',
+      name: 'rax-单组件',
       value: 'mobile-single',
     }, {
-      name: '跨端-多包模式',
+      name: 'rax-组件库',
       value: 'mobile-multiple',
     }],
     default: 'pc-single',
