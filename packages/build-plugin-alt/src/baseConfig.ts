@@ -6,9 +6,11 @@ import * as path from 'path';
 interface IOptions extends Partial<PluginContext> {
   entry: object;
   type: string;
+  mainFile: string;
+  generateMeta?: boolean;
 }
 
-export default (config: WebpackChain, { rootDir, entry, type }: IOptions) => {
+export default (config: WebpackChain, { rootDir, entry, type, pkg, mainFile, generateMeta }: IOptions) => {
   config.target('web');
   config.context(rootDir);
   config.merge({
@@ -58,4 +60,22 @@ export default (config: WebpackChain, { rootDir, entry, type }: IOptions) => {
     .add(/node_modules/)
     .end()
     .type('javascript/auto');
+
+  if (type === 'plugin' && generateMeta && pkg.lcMeta) {
+    ['tsx', 'jsx'].forEach((ruleName) => {
+      config.module.rule(ruleName).use('babel-loader').tap((options) => {
+        return {
+          ...options,
+          plugins: [
+            ...options.plugins,
+            [require.resolve('./babelPluginMeta'), {
+              filename: mainFile,
+              meta: pkg.lcMeta,
+            }],
+          ]
+        }
+      })
+    })
+  }
+  
 }

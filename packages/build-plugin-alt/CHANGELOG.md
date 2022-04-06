@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
+- `feat` 支持 plugin 开发时 lcMeta 的注入，生成 lcMeta 的逻辑默认开启
+
 ## 1.0.5
 
 - `feat` 本地调试兼容性依赖 lowcode-engine

@@ -4,6 +4,7 @@ import WebpackChain from 'webpack-chain';
 import * as path from 'path';
 import babelCompiler from 'build-plugin-component/src/compiler/babel';
 import openBrowser from 'react-dev-utils/openBrowser';
+import { existsSync } from 'fs-extra';
 import baseConfig from './baseConfig';
 import devConfig from './devConfig';
 import builtinConfig from './builtinConfig';
@@ -19,8 +20,13 @@ interface IOpitons {
 }
 
 const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, log }, options) => {
-  const { type, inject, openUrl, generateMeta = false } = options as unknown as IOpitons;
+  const { type, inject, openUrl, generateMeta = true } = options as unknown as IOpitons;
   const { command, rootDir, userConfig, pkg } = context;
+  const mainFilePrefix = path.join(rootDir, 'src', (pkg.main as string).replace(/lib\/(.*).js/, "$1"));
+  let mainFile = `${mainFilePrefix}.tsx`;
+  if (!existsSync(mainFile)) {
+    mainFile = `${mainFilePrefix}.jsx`;
+  }
   if (command === 'start') {
     if (type !== 'component') {
       const webpackConfig = getWebpackConfig('development') as WebpackChain;
@@ -30,6 +36,9 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
         baseConfig(config, {
           rootDir,
           type,
+          pkg,
+          mainFile,
+          generateMeta,
           entry: {
             index: path.join(__dirname, `./entry/${type}.js`),
             preview: path.join(__dirname, './entry/preview.js'),
@@ -50,6 +59,7 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
           baseConfig(config, {
             rootDir,
             type,
+            mainFile,
             entry: {
               component: path.join(__dirname, './builtIn/component.js'),
             }
@@ -81,7 +91,6 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
     onHook('before.build.load', () => {
       const babelPlugins = [];
       if (type === 'plugin' && generateMeta && pkg.lcMeta) {
-        const mainFile = path.join(rootDir, 'src', `${(pkg.main as string).replace(/lib\/(.*).js/, "$1")}.tsx`);
         babelPlugins.push([require.resolve('./babelPluginMeta'), {
           filename: mainFile,
           meta: pkg.lcMeta,
