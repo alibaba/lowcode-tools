@@ -42,6 +42,4 @@ const <%- componentName %> = (ctx: ILowCodePluginContext) => {
   };
 };
 
-<%- componentName %>.pluginName = '<%- componentName %>';
-
 export default <%- componentName %>;
