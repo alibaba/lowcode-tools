@@ -17,11 +17,11 @@ export default class InitFunc {
   answers: IAnswer;
   prefix: string;
   constructor({ argv, answers, templatePkg, prefix }) {
-    this.projectName = argv['_'][0] || './';
+    this.projectName = argv['_'][0] || answers.projectName;
     this.installPath = getInstallPath();
     this.templatePkg = templatePkg;
-    this.copyPath = path.join(process.cwd(), this.projectName);
     this.answers = answers;
+    this.copyPath = path.join(process.cwd(), `${this.answers.componentType}-${this.projectName}`);
     this.prefix = prefix;
   }
   addPrefix(name) {
