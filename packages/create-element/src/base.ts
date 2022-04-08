@@ -24,8 +24,11 @@ export default class InitFunc {
     this.answers = answers;
     this.prefix = prefix;
   }
-  addPrefix(name) {
+  addPrefix(name: string) {
     const prefix = this.prefix;
+    if (name.startsWith(this.answers.componentType)) {
+      name = name.slice(this.answers.componentType.length)
+    }
     if (new RegExp(`^${prefix}`).test(name)) {
       return name;
     }
