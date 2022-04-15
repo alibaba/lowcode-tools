@@ -28,7 +28,7 @@ const <%- componentName %> = (ctx: ILowCodePluginContext) => {
       // 往引擎增加面板
       ctx.skeleton.add({
         area: 'leftArea',
-        name: 'demoPane',
+        name: '<%- componentName %>Pane',
         type: 'PanelDock',
         props: {
           icon: <Icon />,
