@@ -16,6 +16,7 @@ export default class InitFunc {
   copyPath: string;
   answers: IAnswer;
   prefix: string;
+  useBeta: boolean;
   constructor({ argv, answers, templatePkg, prefix }) {
     this.projectName = argv['_'][0] || './';
     this.installPath = getInstallPath();
@@ -23,6 +24,7 @@ export default class InitFunc {
     this.copyPath = path.join(process.cwd(), this.projectName);
     this.answers = answers;
     this.prefix = prefix;
+    this.useBeta = argv.beta;
   }
   addPrefix(name) {
     const prefix = this.prefix;
@@ -42,7 +44,8 @@ export default class InitFunc {
     fs.ensureDirSync(this.installPath);
   }
   installTpl() {
-    spawn.sync('npm', ['install', `${this.templatePkg}`, '--no-save', '--no-package-lock', '--no-shrinkwrap'], { stdio: 'inherit', cwd: this.installPath });
+
+    spawn.sync('npm', ['install', `${this.templatePkg}${this.useBeta ? '@beta' : ''}`, '--no-save', '--no-package-lock', '--no-shrinkwrap'], { stdio: 'inherit', cwd: this.installPath });
   }
 
   renderTpl() {

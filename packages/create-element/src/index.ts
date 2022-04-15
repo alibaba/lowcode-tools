@@ -63,7 +63,13 @@ const initMap = {
 };
 
 const main = async () => {
-  const argv = yargs(hideBin(process.argv)).argv;
+  const argv = yargs(hideBin(process.argv))
+    .options('beta', {
+      type: 'boolean',
+      describe: 'use beta template package to init',
+      default: false,
+    })
+    .argv;
   const result = await inquirer.prompt(getQuestions({ argv }));
   const initializer = initMap[result.componentType];
   await initializer(result);
