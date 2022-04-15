@@ -45,7 +45,14 @@ export default class InitFunc {
   }
   installTpl() {
 
-    spawn.sync('npm', ['install', `${this.templatePkg}${this.useBeta ? '@beta' : ''}`, '--no-save', '--no-package-lock', '--no-shrinkwrap'], { stdio: 'inherit', cwd: this.installPath });
+    spawn.sync('npm', [
+      'install', 
+      `${this.templatePkg}${this.useBeta ? '@beta' : ''}`, 
+      '--no-save', 
+      '--no-package-lock', 
+      '--no-shrinkwrap',
+      '--registry=https://registry.npmmirror.com',
+    ], { stdio: 'inherit', cwd: this.installPath });
   }
 
   renderTpl() {
