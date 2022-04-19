@@ -1,6 +1,6 @@
 {
   "name": "@alilc/build-plugin-alt",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "build-scripts plugin template for developers",
   "main": "lib/index.js",
   "files": [
@@ -59,6 +59,7 @@
     "build-scripts-config": "^3.0.3",
     "fs-extra": "^9.1.0",
     "html-webpack-plugin": "^4.0.0",
+    "is-wsl": "^2.2.0",
     "koa": "^2.13.4",
     "kolorist": "^1.5.0",
     "lodash": "^4.17.21",

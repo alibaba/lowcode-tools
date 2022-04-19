@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+
+- `fix` 修复 wsl 环境下 watch 失败的问题 
+
 ## 1.0.6
 
 - `feat` 支持 plugin 开发时 lcMeta 的注入，生成 lcMeta 的逻辑默认开启

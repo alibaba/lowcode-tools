@@ -3,6 +3,7 @@ import WebpackChain from 'webpack-chain';
 import * as path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as webpack from 'webpack';
+import isWsl from 'is-wsl';
 
 
 export default (config: WebpackChain, { pkg }) => {
@@ -16,6 +17,15 @@ export default (config: WebpackChain, { pkg }) => {
       }
     },
   });
+  if (isWsl) {
+    config.merge({
+      devServer: {
+        watchOptions: {
+          poll: 1000,
+        }
+      }
+    })
+  }
   config
     .plugin('index')
     .use(HtmlWebpackPlugin, [
