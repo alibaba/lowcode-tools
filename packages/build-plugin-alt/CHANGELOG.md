@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+- `fix` 删除无用逻辑，去除 style-loader 依赖，解决构建报错问题
+
 ## 1.0.7
 
 - `fix` 修复 wsl 环境下 watch 失败的问题 

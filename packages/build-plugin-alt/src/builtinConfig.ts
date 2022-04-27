@@ -1,7 +1,5 @@
 import setAssetsPath from './setAssetsPath';
 import WebpackChain from 'webpack-chain';
-import * as path from 'path';
-import dropMinicss from './utils/dropMinicss';
 
 export default (config: WebpackChain) => {
   setAssetsPath(config, { js: 'js', css: 'css' });
@@ -18,5 +16,4 @@ export default (config: WebpackChain) => {
   config.output.library('BuiltInComp');
   config.output.libraryTarget('umd');
   config.plugins.delete('HtmlWebpackPlugin');
-  // dropMinicss(config);
 };
