@@ -67,18 +67,19 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
           builtinConfig(config);
         });
       }
-      onHook('after.start.devServer', ({ url }) => {
-        if (inject && openUrl) {
-          openBrowser(openUrl);
-        } else {
-          openBrowser(openUrl || url);
-        }
-      })
+      
     } else {
       onGetWebpackConfig('lowcode-dev', (config) => {
         // console.log(config.toConfig());
       })
     }
+    onHook('after.start.devServer', ({ url }) => {
+      if (inject && openUrl) {
+        openBrowser(openUrl);
+      } else {
+        openBrowser(openUrl || url);
+      }
+    })
     onHook('before.start.load', ({ args }) => {
       if (inject) {
         makeInjectInfo({ pkg, port: args.port, type });

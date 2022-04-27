@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9
+
+- `fix` openUrl 配置在组件状态下不生效
+
 ## 1.0.8
 
 - `fix` 删除无用逻辑，去除 style-loader 依赖，解决构建报错问题
