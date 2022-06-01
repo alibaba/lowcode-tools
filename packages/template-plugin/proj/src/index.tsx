@@ -4,10 +4,6 @@ import Icon from './icon';
 
 const <%- componentName %> = (ctx: ILowCodePluginContext) => {
   return {
-    // 插件名，注册环境下唯一
-    name: '<%- componentName %>',
-    // 依赖的插件（插件名数组）
-    dep: [],
     // 插件对外暴露的数据和方法
     exports() {
       return {
@@ -21,7 +17,7 @@ const <%- componentName %> = (ctx: ILowCodePluginContext) => {
     init() {
       // 你可以拿到其他插件暴露的方法和属性
       // const { data, func } = ctx.plugins.pluginA;
-      // func(); 
+      // func();
 
       // console.log(options.name);
 
@@ -41,5 +37,15 @@ const <%- componentName %> = (ctx: ILowCodePluginContext) => {
     },
   };
 };
+
+// 插件名，注册环境下唯一
+<%- componentName %>.pluginName = '<%- componentName %>';
+<%- componentName %>.meta = {
+  // 依赖的插件（插件名数组）
+  dependencies: [],
+  engines: {
+    lowcodeEngine: '^1.0.0', // 插件需要配合 ^1.0.0 的引擎才可运行
+  },
+}
 
 export default <%- componentName %>;
