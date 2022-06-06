@@ -218,13 +218,14 @@ function envFilter(injects) {
 function getComponentFromUrlItems(items) {
   const map = {};
   items.forEach((item) => {
-    const { packageName, type, url } = item;
+    const { packageName, type, url, library } = item;
     if (!map[packageName]) {
       map[packageName] = {
         packageName,
       };
     }
     map[packageName][type] = url;
+    map[packageName]['library'] = library;
   })
   return map;
 }
@@ -243,9 +244,9 @@ export async function injectAssets(assets) {
       assets.packages.push({
         "package": name,
         "version": '0.1.0',
-        "library": pascalCaseName,
-        "urls": item.view,
-        "editUrls": item.view,
+        "library": item.library || pascalCaseName,
+        "urls": [item.view],
+        "editUrls": [item.view],
       });
       assets.components.push({
         exportName: `${pascalCaseName}Meta`,
@@ -276,8 +277,9 @@ export async function injectComponents(components) {
   const libraryMap = {};
   const componentsMap = {};
   Object.keys(injectedComponents).forEach((name) => {
+    const { library } = injectedComponents[name];
     const pascalName = pascal(name);
-    libraryMap[name] = pascalName;
+    libraryMap[name] = library || pascalName;
     componentsMap[pascalName] = window[`${pascalName}Meta`]?.components?.find(item => item.componentName === pascalName)?.npm;
   })
   const injectedComponentsForRenderer = await buildComponents(libraryMap, componentsMap, undefined);
