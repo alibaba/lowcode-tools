@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- `feat` 支持配置 library
+
 ## 1.0.9
 
 - `fix` openUrl 配置在组件状态下不生效

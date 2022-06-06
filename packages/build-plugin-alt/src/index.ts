@@ -17,10 +17,11 @@ interface IOpitons {
   inject: boolean;
   openUrl: string;
   generateMeta: boolean;
+  library: string;
 }
 
 const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, log }, options) => {
-  const { type, inject, openUrl, generateMeta = true } = options as unknown as IOpitons;
+  const { type, inject, openUrl, generateMeta = true, library } = options as unknown as IOpitons;
   const { command, rootDir, userConfig, pkg } = context;
   const mainFilePrefix = path.join(rootDir, 'src', (pkg.main as string).replace(/lib\/(.*).js/, "$1"));
   let mainFile = `${mainFilePrefix}.tsx`;
@@ -69,9 +70,9 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
       }
       
     } else {
-      onGetWebpackConfig('lowcode-dev', (config) => {
-        // console.log(config.toConfig());
-      })
+      // onGetWebpackConfig('lowcode-dev', (config) => {
+      //   console.log(config.toConfig());
+      // })
     }
     onHook('after.start.devServer', ({ url }) => {
       if (inject && openUrl) {
@@ -82,7 +83,7 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
     })
     onHook('before.start.load', ({ args }) => {
       if (inject) {
-        makeInjectInfo({ pkg, port: args.port, type });
+        makeInjectInfo({ pkg, port: args.port, type, library });
         injectApis();
       }
     });
