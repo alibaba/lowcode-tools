@@ -1,0 +1,31 @@
+{
+  "packages": [
+    {
+      "package": "{{{package}}}",
+      "version": "{{{version}}}",
+      "library": "{{{library}}}",
+      "urls": {{{urls}}},
+      "editUrls": {{{editUrls}}},
+      "advancedUrls": {{{advancedRenderUrls}}},
+      "advancedEditUrls": {{{advancedEditUrls}}}
+    }
+  ],
+  "components": [
+    {
+      "exportName": "{{{metaExportName}}}",
+      "npm": {
+        "package": "{{{package}}}",
+        "version": "{{{version}}}"
+      },
+      "url": "{{{metaUrl}}}",
+      "urls": {{{metaUrls}}},
+      "advancedUrls": {{{advancedMetaUrls}}}
+    }
+  ],
+  "sort": {
+    "groupList": {{{groups}}},
+    "categoryList": {{{categories}}}
+  },
+  "groupList": {{{groups}}},
+  "ignoreComponents": {{{ignoreComponents}}}
+}
