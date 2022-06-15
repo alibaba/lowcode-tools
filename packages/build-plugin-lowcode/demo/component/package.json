@@ -49,5 +49,8 @@
       "pre-commit": "f2elint commit-file-scan",
       "commit-msg": "f2elint commit-msg-scan"
     }
+  },
+  "componentConfig": {
+    "materialSchema": "https://unpkg.com/@alilc/example-components@1.0.0/build/lowcode/assets-prod.json"
   }
 }

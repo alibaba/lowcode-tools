@@ -926,10 +926,6 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
       return `import * as ${component}Data from '${viewJsPath}'`;
     })
     .join('\n');
-  if (platform === 'default') {
-    componentViewsExportStr = '';
-    componentViewsImportStr = '';
-  }
   const scssEntry = getScssEntry(rootDir);
   const viewPath = generateEntry({
     template: 'view.js',
@@ -1051,8 +1047,8 @@ async function bundleAssets(options, pluginOptions, metaTypes, renderTypes, exec
         });
         renderTypes.forEach((renderType) => {
           advancedRenderUrls[renderType] = [
-            `./render/${renderType}.view.js`,
-            `./render/${renderType}.view.css`,
+            `./render/${renderType}/view.js`,
+            `./render/${renderType}/view.css`,
           ];
         });
       } else {
