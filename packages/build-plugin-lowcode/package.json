@@ -9,6 +9,11 @@
   "scripts": {
     "component:dev": "cd demo/component && npm start"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-tools.git",
+    "directory": "packages/build-plugin-lowcode"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {

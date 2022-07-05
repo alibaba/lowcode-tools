@@ -54,15 +54,15 @@ const ALILC_STATIC_RESOURCES = {
   themeStyleUrl:
     'https://alifd.alicdn.com/npm/@alifd/theme-lowcode-dark@0.6.1/dist/next.var.min.css',
   engineCoreCssUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine@1.0.6/dist/css/engine-core.css',
+    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine@1.0.12/dist/css/engine-core.css',
   engineExtCssUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine-ext@1.0.3/dist/css/engine-ext.css',
+    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine-ext@1.0.4/dist/css/engine-ext.css',
   enginePresetCssUrl:
     'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.7/dist/editor-preset-plugin.css',
   engineCoreJsUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine@1.0.6/dist/js/engine-core.js',
+    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine@1.0.12/dist/js/engine-core.js',
   engineExtJsUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine-ext@1.0.3/dist/js/engine-ext.js',
+    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine-ext@1.0.4/dist/js/engine-ext.js',
   enginePresetJsUrl:
     'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.7/dist/editor-preset-plugin.js',
 };
