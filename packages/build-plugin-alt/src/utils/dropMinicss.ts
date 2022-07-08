@@ -16,5 +16,4 @@ export default (config: Config) => {
         .loader(require.resolve('style-loader'));
     });
   });
-  console.log(config.toString());
 }
