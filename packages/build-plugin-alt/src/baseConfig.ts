@@ -54,6 +54,8 @@ export default (config: WebpackChain, { rootDir, entry, type, pkg, mainFile, gen
     "@alilc/lowcode-designer": "var window.AliLowCodeEngine.common.designerCabin",
   });
 
+
+  // see https://github.com/webpack/webpack/releases/tag/v4.0.0 for details
   config.module.rule('mjs2js')
     .test(/\.mjs$/)
     .include
