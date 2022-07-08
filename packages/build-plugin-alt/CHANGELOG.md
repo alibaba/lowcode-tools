@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.1
+
+- `refactor` 删除无用 console
+- `fix` inject 模式下，为配置 openUrl 的情况下，打开 lowcode-engine demo。
+
+## 1.2.0
+
+- `feat`  在 inject 模式下不使用 miniCssExtract
+
 ## 1.1.0
 
 - `feat` 支持配置 library

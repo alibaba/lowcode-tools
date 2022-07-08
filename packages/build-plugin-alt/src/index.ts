@@ -77,8 +77,12 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
       // })
     }
     onHook('after.start.devServer', ({ url }) => {
-      if (inject && openUrl) {
-        openBrowser(openUrl);
+      if (inject) {
+        if (openUrl) {
+          openBrowser(openUrl);
+        } else {
+          openBrowser('https://lowcode-engine.cn/demo/index.html?debug');
+        }
       } else {
         openBrowser(openUrl || url);
       }
