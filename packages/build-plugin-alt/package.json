@@ -1,6 +1,6 @@
 {
   "name": "@alilc/build-plugin-alt",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "build-scripts plugin template for developers",
   "main": "lib/index.js",
   "files": [
@@ -64,7 +64,8 @@
     "kolorist": "^1.5.0",
     "lodash": "^4.17.21",
     "moment-locales-webpack-plugin": "^1.2.0",
-    "react-dev-utils": "^11.0.4"
+    "react-dev-utils": "^11.0.4",
+    "style-loader": "^2.0.0"
   },
   "publishConfig": {
     "access": "public",

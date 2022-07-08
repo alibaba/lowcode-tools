@@ -11,6 +11,7 @@ import builtinConfig from './builtinConfig';
 import injectConfig from './inject/config';
 import makeInjectInfo from './inject/makeInjectInfo';
 import injectApis from './inject/apis';
+import dropMinicss from './utils/dropMinicss';
 
 interface IOpitons {
   type: 'setter' | 'plugin' | 'component';
@@ -47,6 +48,7 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
         });
         devConfig(config, { pkg });
         if (inject) {
+          dropMinicss(config);
           injectConfig(config, { rootDir, pkg, type })
         }
       });
