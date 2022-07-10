@@ -70,10 +70,10 @@ const assets = {
 let assetsName = './assets-dev.json';
 
 const setterMap = {{{setterMap}}};
-if (typeof setterMap === 'object' && Object.keys(setterMap).length) {
-  setters.registerSetter(setterMap);
-}
-if (devMode) {
+
+const type = '{{{type}}}';
+
+if (devMode && type !== 'setter') {
   assets.packages.push({
     "package": "{{{package}}}",
     "version": "{{{version}}}",
@@ -146,6 +146,9 @@ init(() => {
   return {
     name: 'editor-init',
     async init() {
+      if (typeof setterMap === 'object' && Object.keys(setterMap).length) {
+        setters.registerSetter(setterMap);
+      }
       if (!devMode) {
         const devAssets = await (await fetch(assetsName)).json();
         const packages = devAssets.packages;

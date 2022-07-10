@@ -7,6 +7,7 @@ const ButtonMeta: ComponentMetadata = {
   "docUrl": "",
   "screenshot": "",
   "devMode": "proCode",
+  group: '测试组件',
   "npm": {
     "package": "@alilc/example-components",
     "version": "1.0.0",
@@ -27,9 +28,10 @@ const ButtonMeta: ComponentMetadata = {
         },
         "name": "title",
         "setter": {
-          "componentName": "StringSetter",
-          "isRequired": true,
-          "initialValue": ""
+          "componentName": "TestSetter",
+          props: {
+            defaultChecked: true
+          }
         }
       }
     ],

@@ -7,7 +7,8 @@
     "plugin"
   ],
   "scripts": {
-    "component:dev": "cd demo/component && npm start"
+    "component:dev": "cd demo/component && npm start",
+    "setter:dev": "cd demo/setter && npm start"
   },
   "author": "",
   "license": "MIT",

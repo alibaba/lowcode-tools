@@ -25,7 +25,11 @@ async function installModule(args, name) {
   if (await isNPMModuleInstalled(args, name)) return;
   const { workDir, npmClient = 'tnpm' } = args;
   try {
-    await spawn(npmClient, ['i', name], { stdio: 'inherit', cwd: workDir });
+    await spawn(npmClient, [
+      'i', 
+      name, 
+      npmClient === 'npm' ? '--registry=https://registry.npmmirror.com' : ''
+    ], { stdio: 'inherit', cwd: workDir });
   } catch (e) {
     // TODO
   }

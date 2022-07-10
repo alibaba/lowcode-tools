@@ -24,12 +24,15 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.21.8",
-    "@alife/theme-whale-light": "^0.10.1",
+    "@alilc/lowcode-setter-behavior": "^1.0.0",
+    "@alilc/lowcode-setter-title": "^1.0.2",
+    "@alilc/magic-editor-setter": "^1.0.0",
     "@storybook/addon-docs": "^6.3.4",
     "@storybook/addon-essentials": "^6.3.4",
     "@storybook/addon-storysource": "^6.3.4",
     "moment": "^2.29.1",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "undefined": "^undefined"
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.3",

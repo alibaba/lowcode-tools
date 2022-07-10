@@ -10,12 +10,12 @@ module.exports = {
       {
         engineScope: '@alilc',
         extraAssets: [
-          'https://alifd.alicdn.com/npm/@alilc/lowcode-materials@1.0.3/dist/assets.json'
+          'https://unpkg.com/@alilc/lowcode-materials@1.0.3/build/lowcode/assets-prod.json'
         ],
-        setterMap: {
-          TestSetter: '@alilc/magic-editor-setter@1.0.0'
-        },
-        npmClient: 'cnpm'
+        type: 'setter',
+        setterName: 'SelectSetter',
+        npmClient: 'cnpm',
+        noParse: true
       },
     ],
   ],

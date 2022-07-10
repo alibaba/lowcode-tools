@@ -207,12 +207,12 @@ module.exports = async (options, pluginOptions = {}) => {
     debug(`${index}: ${val}`);
   });
 
-  const { setterMap, engineScope } = pluginOptions;
+  const { setterMap, engineScope, npmClient } = pluginOptions;
   if (setterMap) {
     await registerSetter(
       {
         workDir: rootDir,
-        npmClient: engineScope === '@alilc' ? 'npm' : 'tnpm',
+        npmClient: npmClient || (engineScope === '@alilc' ? 'npm' : 'tnpm'),
       },
       setterMap,
     );
@@ -268,6 +268,7 @@ async function build(options, pluginOptions, execCompile) {
     lowcodeDir = 'lowcode',
     entryPath,
     platforms = [],
+    type,
   } = pluginOptions || {};
   !noParse &&
     (await initLowCodeSchema(
@@ -356,6 +357,8 @@ async function start(options, pluginOptions) {
     externals = {},
     setterMap = {},
     fullbackMeta = 'default',
+    type = 'component',
+    setterName,
   } = pluginOptions || {};
   if (baseLibrary === 'rax' && Array.isArray(extraAssets)) {
     extraAssets.push(
@@ -373,6 +376,11 @@ async function start(options, pluginOptions) {
   platforms.forEach((platform) => {
     advancedRenderUrls[platform] = [`./${platform}.view.js`];
   });
+
+  if (type === 'setter' && setterName) {
+    setterMap[setterName] = path.resolve(rootDir, 'src/index');
+  }
+
   let _setterMap = '{';
   const setterImportStr = Object.keys(setterMap || {})
     .map((item) => {
@@ -404,6 +412,8 @@ async function start(options, pluginOptions) {
       setterMap: _setterMap,
       metaPathMap: JSON.stringify(metaPathMap),
       fullbackMeta,
+      setterName: setterName || '',
+      type,
     },
   });
   const previewJs = generateEntry({
