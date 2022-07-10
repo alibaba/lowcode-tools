@@ -269,11 +269,13 @@ async function build(options, pluginOptions, execCompile) {
     entryPath,
     platforms = [],
     type,
+    componentsPath,
   } = pluginOptions || {};
   !noParse &&
     (await initLowCodeSchema(
       rootDir,
       package,
+      componentsPath,
       alias['@'],
       metaFormat,
       metaFormat,
