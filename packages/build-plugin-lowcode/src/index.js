@@ -275,12 +275,12 @@ async function build(options, pluginOptions, execCompile) {
     (await initLowCodeSchema(
       rootDir,
       package,
-      componentsPath,
-      alias['@'],
+      alias['@'] || componentsPath, // componentsPath
       metaFormat,
       metaFormat,
       components,
       engineScope === '@alilc' ? 'npm' : 'tnpm',
+      lowcodeDir,
       entryPath,
     ));
   const confirmedMetaTypes = confirmMetaTypes(rootDir, lowcodeDir, metaTypes);
