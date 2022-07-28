@@ -47,7 +47,7 @@ export default class InitFunc {
 
     spawn.sync('npm', [
       'install', 
-      `${this.templatePkg}${this.useBeta ? '@beta' : ''}`, 
+      `${this.templatePkg}${this.useBeta ? '@beta' : '@latest'}`, 
       '--no-save', 
       '--no-package-lock', 
       '--no-shrinkwrap',
