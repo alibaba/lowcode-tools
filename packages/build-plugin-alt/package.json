@@ -6,6 +6,11 @@
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-tools.git",
+    "directory": "packages/build-plugin-alt"
+  },
   "scripts": {
     "start": "npm run copy && tsc -w",
     "build": "rm -rf lib && tsc && npm run copy",
