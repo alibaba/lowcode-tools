@@ -1,3 +1,7 @@
+## 1.1.2
+
+- `fix` 额外处理 _npmignore
+
 ## 1.1.1
 
 - `feat` use https://registry.npmmirror.com for default npm registry

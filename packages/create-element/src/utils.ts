@@ -10,5 +10,8 @@ export const transformFileName = (fileName) => {
   if (fileName === '_gitignore') {
     return '.gitignore';
   }
+  if (fileName === '_npmignore') {
+    return '.npmignore';
+  }
   return fileName;
 }
