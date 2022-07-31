@@ -40,7 +40,12 @@ function parseNpmName(npmName) {
     return $1.toUpperCase();
   });
   const uniqueName =
-    (matched[1] ? matched[1].charAt(1).toUpperCase() + matched[1].slice(2) : '') +
+    (matched[1]
+      ? matched[1].charAt(1).toUpperCase() +
+        matched[1].slice(2).replace(/[\-_]+([^\-_])/g, ($0, $1) => {
+          return $1.toUpperCase();
+        })
+      : '') +
     name.charAt(0).toUpperCase() +
     name.slice(1);
   return {
