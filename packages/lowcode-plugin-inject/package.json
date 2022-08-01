@@ -14,6 +14,11 @@
     "beta": "npm publish --tag beta",
     "pub": "npm publish"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-tools.git",
+    "directory": "packages/lowcode-plugin-inject"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
