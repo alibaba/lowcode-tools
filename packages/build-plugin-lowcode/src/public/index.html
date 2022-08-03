@@ -47,6 +47,9 @@
     <link rel="stylesheet" href="<%= enginePresetCssUrl %>" />
     <link href="<%= themeVariableUrl %>" rel="stylesheet" />
     <link href="<%= themeStyleUrl %>" rel="stylesheet" />
+    <% if (typeof antdCssUrl === 'string') { %>
+      <link href="<%= antdCssUrl %>" rel="stylesheet" />
+    <% } %>
     <div id="lce-container"></div>
     <script src="https://g.alicdn.com/code/lib/rax/1.1.0/rax.umd.min.js"></script>
     <script src="https://g.alicdn.com/code/lib/react/16.9.0/umd/react.development.js"></script>
@@ -58,6 +61,9 @@
     <script src="https://g.alicdn.com/platform/c/??react15-polyfill/0.0.1/dist/index.js,lodash/4.6.1/lodash.min.js,immutable/3.7.6/dist/immutable.min.js,natty-storage/2.0.2/dist/natty-storage.min.js,natty-fetch/2.6.0/dist/natty-fetch.pc.min.js,tinymce/4.2.5/tinymce-full.js"></script>
     <script src="https://g.alicdn.com/mylib/moment/2.24.0/min/moment.min.js"></script>
     <script src="https://g.alicdn.com/code/lib/alifd__next/1.23.20/next-with-locales.min.js"></script>
+    <% if (typeof antdJsUrl === 'string') { %>
+      <script crossorigin="anonymous" src="<%= antdJsUrl %>"></script>
+    <% } %>
     <script crossorigin="anonymous" src="<%= engineCoreJsUrl %>"></script>
     <script crossorigin="anonymous" src="<%= engineExtJsUrl %>"></script>
     <script>
