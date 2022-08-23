@@ -43,6 +43,7 @@ async function portIsOccupied(_port) {
 }
 
 const PORT = 8899;
+const HOST = '0.0.0.0';
 
 const init = async () => {
 
@@ -91,7 +92,7 @@ const init = async () => {
   app
     .use(router.routes())
     .use(router.allowedMethods())
-    .listen(PORT, () => {
+    .listen(PORT, HOST, () => {
       logger.info('Inject server started', { needBreak: true });
     });
 };
