@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+- `fix` inject 接口监听 0.0.0.0，避免 localhost 和 127.0.0.1 没有匹配的情况
+
 ## 1.2.1
 
 - `refactor` 删除无用 console

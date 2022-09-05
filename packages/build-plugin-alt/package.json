@@ -1,6 +1,6 @@
 {
   "name": "@alilc/build-plugin-alt",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "build-scripts plugin template for developers",
   "main": "lib/index.js",
   "files": [
