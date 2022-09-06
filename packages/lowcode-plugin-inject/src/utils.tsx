@@ -67,15 +67,19 @@ function getInjectUrls(resourceType, type = 'url'): Promise<any> {
 
       const { type, injects } = window.injectConfig || {};
       if (type === 'auto' || urlParams[injectTypeFlag] === 'auto' || urlParams[debugFlag] !== undefined) {
-        fetchJsonp(injectAPIUrl).then(res => res.json()).then((data) => {
-          urls = envFilter(data.content);
-          urlCache = urls;
-          resolve(filter(urlCache));
+        let finalInjectAPIUrl = injectAPIUrl;
+        if (urlParams['injectServerHost']) {
+          finalInjectAPIUrl = `http://${urlParams['injectServerHost']}:8899/apis/injectInfo`;
+        }
+        fetchJsonp(finalInjectAPIUrl).then(res => res.json()).then((data) => {
+            urls = envFilter(data.content);
+            urlCache = urls;
+            resolve(filter(urlCache));
         }).catch((err) => {
-          urlCache = [];
-          resolve([]);
-          console.error(err);
-        });
+            urlCache = [];
+            resolve([]);
+            console.error(err);
+          });
       } else if (type === 'custom' && injects) {
         urls = urls.concat(injects);
         urlCache = urls;
@@ -128,22 +132,22 @@ export async function getInjectedResource(type) {
   const urls = await getInjectUrls(type);
   await loadComponentFromSources(urls);
   return window[arrayFlag].filter((item) => {
-    const _item = item.default || item;
-    if (!type) {
+      const _item = item.default || item;
+      if (!type) {
+        return true;
+      }
+      if (_item.type && typeMap[type].indexOf(_item.type) < 0) {
+        return false;
+      }
+      if (!_item.type && _item.name && _item.name.indexOf(`@ali/${type}-`) < 0) {
+        return false;
+      }
       return true;
-    }
-    if (_item.type && typeMap[type].indexOf(_item.type) < 0) {
-      return false;
-    }
-    if (!_item.type && _item.name && _item.name.indexOf(`@ali/${type}-`) < 0) {
-      return false;
-    }
-    return true;
   }).map((item) => {
-    const _item = item.default || item;
-    _item.module = getModule(_item.module);
-    return _item;
-  });
+      const _item = item.default || item;
+      _item.module = getModule(_item.module);
+      return _item;
+    });
 }
 
 function getModule(module) {
