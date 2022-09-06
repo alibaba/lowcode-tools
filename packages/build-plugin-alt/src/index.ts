@@ -87,9 +87,10 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
         openBrowser(openUrl || url);
       }
     })
-    onHook('before.start.load', ({ args }) => {
+    onHook('before.start.devServer', (server) => {
+      const injectServerHost = server['urls'].lanUrlForConfig;
       if (inject) {
-        makeInjectInfo({ pkg, port: args.port, type, library });
+        makeInjectInfo({ pkg, port: server.devServer.options.port, type, library, altServerHost: injectServerHost });
         injectApis();
       }
     });
@@ -100,8 +101,8 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
       const babelPlugins = [];
       if (type === 'plugin' && generateMeta && pkg.lcMeta) {
         babelPlugins.push([require.resolve('./babelPluginMeta'), {
-          filename: mainFile,
-          meta: pkg.lcMeta,
+            filename: mainFile,
+            meta: pkg.lcMeta,
         }])
       }
       babelCompiler(context, {
