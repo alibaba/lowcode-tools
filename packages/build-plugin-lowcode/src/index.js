@@ -68,7 +68,8 @@ function getEntry(rootDir, entryPath) {
   for (let i = 0; i < defaultEntryPaths.length; i++) {
     const p = path.resolve(rootDir, defaultEntryPaths[i]);
     if (fse.existsSync(p)) {
-      return p;
+      return p.replace(/\\/g, '\\\\');
+      // return p;
     }
   }
   return '';
@@ -78,7 +79,8 @@ function getScssEntry(rootDir) {
   for (let i = 0; i < defaultScssEntryPaths.length; i++) {
     const p = path.resolve(rootDir, defaultScssEntryPaths[i]);
     if (fse.existsSync(p)) {
-      return p;
+      return p.replace(/\\/g, '\\\\');
+      // return p;
     }
   }
   return '';
@@ -290,8 +292,9 @@ async function build(options, pluginOptions, execCompile) {
     }),
   );
   const metaPathMap = {};
-  metaPaths.forEach((item) => {
-    metaPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
+  metaPaths.forEach((item) => {    
+    metaPathMap[path.basename(item).replace(path.extname(item), '')] = item;
+    // metaPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
   });
   const confirmedRenderPlatforms = confirmRenderPlatforms(rootDir, platforms);
   const renderViewPathMap = {};
@@ -301,7 +304,8 @@ async function build(options, pluginOptions, execCompile) {
     }),
   );
   renderViewPaths.forEach((item) => {
-    renderViewPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
+    renderViewPathMap[path.basename(item).replace(path.extname(item), '')] = item;
+    // renderViewPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
   });
   const result = {
     metaPathMap,
@@ -656,6 +660,7 @@ async function bundleMetaV2(options, pluginOptions, execCompile, metaType) {
         );
         usedComponents.push(component);
       }
+      metaJsPath = metaJsPath.replace(/\\/g, '\\\\')
       return `import ${
         component.includes('.') ? component.replace(/\./g, '') : component
       }Meta from '${metaJsPath}'`;
