@@ -66,6 +66,7 @@ const init = async () => {
       'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , sessionToken',
     );
     ctx.res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    ctx.res.setHeader('Access-Control-Allow-Private-Network', 'true');
     ctx.type = 'text/javascript';
     const callbackName = ctx.query.callback || 'callback';
     const filePath = getFilePath();
