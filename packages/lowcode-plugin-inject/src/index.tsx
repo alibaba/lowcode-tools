@@ -6,6 +6,7 @@ import { Notification } from '@alifd/next';
 
 let injectedPluginConfigMap = null;
 let injectedPlugins = [];
+let injectServerHost = '127.0.0.1';
 
 export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext) {
   if (!injectedPluginConfigMap) {
@@ -21,7 +22,19 @@ export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext
   return injectedPluginConfigMap[name];
 }
 
-const Inject = (ctx: ILowCodePluginContext) => {
+export function getInjectServerHost() {
+  return injectServerHost;
+}
+
+interface IOptions {
+  injectServerHost: string;
+}
+
+const Inject = (ctx: ILowCodePluginContext, options: IOptions) => {
+  console.log('options?.injectServerHost', options?.injectServerHost)
+  if (options?.injectServerHost) {
+    injectServerHost = options.injectServerHost;
+  }
   // inject 已有的设计器插件
   if (needInject) {
     // 覆盖后续的插件注册逻辑，所有只有本插件后面注册的插件才可以支持 inject 逻辑
@@ -87,6 +100,19 @@ const Inject = (ctx: ILowCodePluginContext) => {
 Inject.pluginName = 'LowcodePluginInjectAlt';
 
 export default Inject;
+Inject.meta = {
+  dependencies: [],
+  preferenceDeclaration: {
+    title: '注入资源的主机地址',
+    properties: [
+      {
+        key: 'injectServerHost',
+        type: 'string',
+        description: '注入资源的主机地址',
+      },
+    ],
+  },
+};
 
 export {
   injectAssets,

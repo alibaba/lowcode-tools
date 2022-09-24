@@ -4,6 +4,7 @@ import * as React from 'react';
 import { pascal } from 'case';
 import { Notification } from '@alifd/next';
 import { buildComponents } from '@alilc/lowcode-utils';
+import { getInjectServerHost } from '.';
 
 const typeMap = {
   vc: ['prototype', 'view'],
@@ -19,7 +20,6 @@ const queryFlag = '__injectFrom'; // 不推荐
 const injectTypeFlag = '__injectType'; // 不推荐
 const injectEnvFlag = '__injectEnv'; // 不推荐
 const debugFlag = 'debug'; // 推荐
-const injectAPIUrl = 'http://127.0.0.1:8899/apis/injectInfo';
 const arrayFlag = '__components';
 const jsonpFlag = '__injectComponent';
 const prototypeKeyFlag = '__prototype';
@@ -67,7 +67,7 @@ function getInjectUrls(resourceType, type = 'url'): Promise<any> {
 
       const { type, injects } = window.injectConfig || {};
       if (type === 'auto' || urlParams[injectTypeFlag] === 'auto' || urlParams[debugFlag] !== undefined) {
-        fetchJsonp(injectAPIUrl).then(res => res.json()).then((data) => {
+        fetchJsonp(`http://${getInjectServerHost()}:8899/apis/injectInfo`).then(res => res.json()).then((data) => {
           urls = envFilter(data.content);
           urlCache = urls;
           resolve(filter(urlCache));
