@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import { getFilePath } from './utils';
 
-export default ({ pkg, port, type, library }) => {
+export default ({ pkg, port, type, library, injectServerHost }) => {
   const cacheFilePath = getFilePath();
   fs.ensureFileSync(cacheFilePath);
   let cache = {};
@@ -14,20 +14,20 @@ export default ({ pkg, port, type, library }) => {
       type: type === 'plugin' ? 'designerPlugin' : 'setter',
       library,
       subType: '',
-      url: `http://127.0.0.1:${port}/js/utils.js?name=${pkg.name}`,
+      url: `http://${injectServerHost}:${port}/js/utils.js?name=${pkg.name}`,
     };
   } else {
     cache[`${port}-view`] = {
       packageName: pkg.name,
       library,
       type: 'view',
-      url: `http://127.0.0.1:${port}/view.js?name=${pkg.name}`,
+      url: `http://${injectServerHost}:${port}/view.js?name=${pkg.name}`,
     };
     cache[`${port}-meta`] = {
       packageName: pkg.name,
       library,
       type: 'meta',
-      url: `http://127.0.0.1:${port}/meta.js?name=${pkg.name}`,
+      url: `http://${injectServerHost}:${port}/meta.js?name=${pkg.name}`,
     }
   }
 
