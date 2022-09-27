@@ -8,8 +8,8 @@
   "README": "README.md",
   "scripts": {
     "start": "npm run dev",
-    "dev": "build-scripts start",
-    "build": "build-scripts build",
+    "dev": "build-scripts start --config build.js",
+    "build": "build-scripts build --config build.js",
     "prepublishOnly": "npm run build",
     "beta": "npm publish --tag beta",
     "pub": "npm publish"
