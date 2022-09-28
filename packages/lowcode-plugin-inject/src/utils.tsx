@@ -4,7 +4,6 @@ import * as React from 'react';
 import { pascal } from 'case';
 import { Notification } from '@alifd/next';
 import { buildComponents } from '@alilc/lowcode-utils';
-import { getInjectServerHost } from '.';
 
 const typeMap = {
   vc: ['prototype', 'view'],
@@ -31,6 +30,8 @@ window[jsonpFlag] = function addComponents(component) {
   window[arrayFlag].push(component);
 };
 
+let injectServerHost = '127.0.0.1';
+
 const searchParams = new URLSearchParams(window.location.search);
 // 是否需要开启 inject 逻辑
 
@@ -41,6 +42,12 @@ export const needInject = searchParams.get('__injectFrom') // 历史兼容
 
 
 let urlCache = null;
+
+export function setInjectServerHost(finalInjectServerHost) {
+  injectServerHost = finalInjectServerHost;
+  console.log('inject server host', injectServerHost);
+}
+
 // 获取 inject 资源的 url，格式：['url1', 'url2']
 function getInjectUrls(resourceType, type = 'url'): Promise<any> {
   const filter = (_urls) => {
@@ -67,7 +74,7 @@ function getInjectUrls(resourceType, type = 'url'): Promise<any> {
 
       const { type, injects } = window.injectConfig || {};
       if (type === 'auto' || urlParams[injectTypeFlag] === 'auto' || urlParams[debugFlag] !== undefined) {
-        fetchJsonp(`http://${getInjectServerHost()}:8899/apis/injectInfo`).then(res => res.json()).then((data) => {
+        fetchJsonp(`http://${injectServerHost}:8899/apis/injectInfo`).then(res => res.json()).then((data) => {
           urls = envFilter(data.content);
           urlCache = urls;
           resolve(filter(urlCache));

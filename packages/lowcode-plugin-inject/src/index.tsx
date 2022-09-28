@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { ILowCodePluginContext, plugins, setters } from '@alilc/lowcode-engine';
-import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages } from './utils';
+import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages, setInjectServerHost } from './utils';
 import { Notification } from '@alifd/next';
 
 
 let injectedPluginConfigMap = null;
 let injectedPlugins = [];
-let injectServerHost = '127.0.0.1';
 
 export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext) {
   if (!injectedPluginConfigMap) {
@@ -22,18 +21,13 @@ export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext
   return injectedPluginConfigMap[name];
 }
 
-export function getInjectServerHost() {
-  return injectServerHost;
-}
-
 interface IOptions {
   injectServerHost: string;
 }
 
 const Inject = (ctx: ILowCodePluginContext, options: IOptions) => {
-  console.log('options?.injectServerHost', options?.injectServerHost)
   if (options?.injectServerHost) {
-    injectServerHost = options.injectServerHost;
+    setInjectServerHost(options.injectServerHost);
   }
   // inject 已有的设计器插件
   if (needInject) {
