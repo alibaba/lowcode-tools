@@ -77,14 +77,6 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
       // })
     }
 
-    onHook('before.start.devServer', (server) => {
-      const injectServerHost = server['urls'].lanUrlForConfig;
-      if (inject) {
-        makeInjectInfo({ pkg, port: server.devServer.options.port, type, library, injectServerHost });
-        injectApis();
-      }
-    });
-
     onHook('after.start.devServer', ({ url }) => {
       if (inject) {
         if (openUrl) {
@@ -96,6 +88,13 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
         openBrowser(openUrl || url);
       }
     })
+
+    onHook('before.start.load', ({ args }) => {
+      if (inject) {
+        makeInjectInfo({ pkg, host: args.host || '127.0.0.1', port: args.port, type, library });
+        injectApis();
+      }
+    });
 
   } else if (command === 'build' && type !== 'component') {
     const { basicComponents = [] } = userConfig;
