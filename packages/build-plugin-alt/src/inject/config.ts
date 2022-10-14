@@ -15,7 +15,7 @@ export default (config: WebpackChain, { pkg, type }: IOptions) => {
  });
  config.output.library('__injectComponent');
  config.output.libraryTarget('jsonp');
- config.devServer.host('127.0.0.1');
+ config.devServer.host('0.0.0.0');
  config.plugin('define').tap((args) => {
    return [{
      ...args[0],

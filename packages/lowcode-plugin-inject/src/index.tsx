@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ILowCodePluginContext, plugins, setters } from '@alilc/lowcode-engine';
-import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages } from './utils';
+import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages, setInjectServerHost } from './utils';
 import { Notification } from '@alifd/next';
 
 
@@ -21,7 +21,14 @@ export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext
   return injectedPluginConfigMap[name];
 }
 
-const Inject = (ctx: ILowCodePluginContext) => {
+interface IOptions {
+  injectServerHost: string;
+}
+
+const Inject = (ctx: ILowCodePluginContext, options: IOptions) => {
+  if (options?.injectServerHost) {
+    setInjectServerHost(options.injectServerHost);
+  }
   // inject 已有的设计器插件
   if (needInject) {
     // 覆盖后续的插件注册逻辑，所有只有本插件后面注册的插件才可以支持 inject 逻辑
@@ -87,6 +94,19 @@ const Inject = (ctx: ILowCodePluginContext) => {
 Inject.pluginName = 'LowcodePluginInjectAlt';
 
 export default Inject;
+Inject.meta = {
+  dependencies: [],
+  preferenceDeclaration: {
+    title: '注入资源的主机地址',
+    properties: [
+      {
+        key: 'injectServerHost',
+        type: 'string',
+        description: '注入资源的主机地址',
+      },
+    ],
+  },
+};
 
 export {
   injectAssets,

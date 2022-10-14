@@ -70,12 +70,13 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
           builtinConfig(config);
         });
       }
-      
+
     } else {
       // onGetWebpackConfig('lowcode-dev', (config) => {
       //   console.log(config.toConfig());
       // })
     }
+
     onHook('after.start.devServer', ({ url }) => {
       if (inject) {
         if (openUrl) {
@@ -87,9 +88,10 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
         openBrowser(openUrl || url);
       }
     })
+
     onHook('before.start.load', ({ args }) => {
       if (inject) {
-        makeInjectInfo({ pkg, port: args.port, type, library });
+        makeInjectInfo({ pkg, host: args.host || '127.0.0.1', port: args.port, type, library });
         injectApis();
       }
     });
