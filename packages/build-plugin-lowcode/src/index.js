@@ -365,6 +365,7 @@ async function start(options, pluginOptions) {
     fullbackMeta = 'default',
     type = 'component',
     setterName,
+    presetConfig = {},
   } = pluginOptions || {};
   if (baseLibrary === 'rax' && Array.isArray(extraAssets)) {
     extraAssets.push(
@@ -420,6 +421,7 @@ async function start(options, pluginOptions) {
       fullbackMeta,
       setterName: setterName || '',
       type,
+      presetConfig: JSON.stringify(presetConfig),
     },
   });
   const previewJs = generateEntry({

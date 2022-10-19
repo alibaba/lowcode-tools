@@ -27,7 +27,10 @@ const defaultConfig = {
 
 export default async (cb, customPlugins, container, config) => {
 
-  await registerDefaultPlugins();
+  const realConfig = { ...defaultConfig, ...(config || {})};
+  const { presetConfig } = realConfig;
+
+  await registerDefaultPlugins(presetConfig);
   registerDefaultSetters();
 
   // 处理外部传入初始化回调
@@ -36,5 +39,5 @@ export default async (cb, customPlugins, container, config) => {
     await plugins.register(cb);
   }
 
-  init(container, config || defaultConfig);
+  init(container, realConfig);
 }

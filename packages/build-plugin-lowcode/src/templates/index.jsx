@@ -70,6 +70,7 @@ const assets = {
 let assetsName = './assets-dev.json';
 
 const setterMap = {{{setterMap}}};
+const presetConfig = {{{presetConfig}}};
 
 const type = '{{{type}}}';
 
@@ -196,7 +197,9 @@ init(() => {
       }
     },
   }
-}, [], LCE_CONTAINER);
+}, [], LCE_CONTAINER, {
+  presetConfig
+});
 
 function getPageSchema() {
   const schema = JSON.parse(

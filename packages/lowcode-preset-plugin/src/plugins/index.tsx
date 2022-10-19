@@ -5,7 +5,7 @@ import {
   project,
 } from '@alilc/lowcode-engine';
 import AliLowCodeEngineExt from '@alilc/lowcode-engine-ext';
-import { Button } from '@alifd/next';
+import { Button, Icon } from '@alifd/next';
 import UndoRedoPlugin from '@alilc/lowcode-plugin-undo-redo';
 import ComponentsPane from '@alilc/lowcode-plugin-components-pane';
 import ZhEnPlugin from '@alilc/lowcode-plugin-zh-en';
@@ -18,8 +18,9 @@ import Inject, { injectAssets } from '@alilc/lowcode-plugin-inject';
 import SimulatorResizer from '@alilc/lowcode-plugin-simulator-select';
 
 import Logo from './logo';
+import { preview, resetSchema, saveSchema } from 'src/utils';
 
-const registerDefaultPlugins = async () => {
+const registerDefaultPlugins = async (presetConfig) => {
   await plugins.register(ManualPlugin);
 
   // await plugins.register(Inject);
@@ -36,6 +37,9 @@ const registerDefaultPlugins = async () => {
       name: 'builtin-plugin-registry',
       async init() {
         const { skeleton } = ctx;
+        const { logo: customLogoConfig } = presetConfig || {};
+
+
         // 注册 logo 面板
         skeleton.add({
           area: 'topArea',
@@ -43,8 +47,8 @@ const registerDefaultPlugins = async () => {
           name: 'logo',
           content: Logo,
           contentProps: {
-            logo: 'https://img.alicdn.com/imgextra/i4/O1CN013w2bmQ25WAIha4Hx9_!!6000000007533-55-tps-137-26.svg',
-            href: 'https://lowcode-engine.cn',
+            logo: customLogoConfig?.logo || 'https://img.alicdn.com/imgextra/i4/O1CN013w2bmQ25WAIha4Hx9_!!6000000007533-55-tps-137-26.svg',
+            href: customLogoConfig?.href || 'https://lowcode-engine.cn',
           },
           props: {
             align: 'left',
@@ -113,26 +117,36 @@ const registerDefaultPlugins = async () => {
   // 注册中英文切换
   await plugins.register(ZhEnPlugin);
 
-  // 注册保存面板
-  const saveSample = (ctx: ILowCodePluginContext) => {
+  const previewSample = (ctx: ILowCodePluginContext) => {
     return {
-      name: 'saveSample',
+      name: 'previewSample',
       async init() {
-        const { skeleton, hotkey } = ctx;
-
+        const { skeleton } = ctx;
         skeleton.add({
-          name: 'saveSample',
+          name: 'previewSample',
           area: 'topArea',
           type: 'Widget',
           props: {
             align: 'right',
           },
           content: (
-            <Button onClick={() => {}}>
-              保存到本地
+            <Button ghost="light" iconSize="large" onClick={preview}>
+              <Icon type="bofang" />
             </Button>
           ),
         });
+      },
+    };
+  };
+  previewSample.pluginName = 'previewSample';
+  await plugins.register(previewSample);
+
+  // 注册保存面板
+  const saveSample = (ctx: ILowCodePluginContext) => {
+    return {
+      name: 'saveSample',
+      async init() {
+        const { skeleton, hotkey } = ctx;
         skeleton.add({
           name: 'resetSchema',
           area: 'topArea',
@@ -141,11 +155,25 @@ const registerDefaultPlugins = async () => {
             align: 'right',
           },
           content: (
-            <Button onClick={() => {}}>
-              重置页面
+            <Button type="secondary" onClick={resetSchema}>
+              重置
             </Button>
           ),
         });
+        skeleton.add({
+          name: 'saveSample',
+          area: 'topArea',
+          type: 'Widget',
+          props: {
+            align: 'right',
+          },
+          content: (
+            <Button type="primary" onClick={saveSchema}>
+              保存
+            </Button>
+          ),
+        });
+        
         hotkey.bind('command+s', (e) => {
           e.preventDefault();
           // saveSchema();
@@ -155,6 +183,10 @@ const registerDefaultPlugins = async () => {
   }
   saveSample.pluginName = 'saveSample';
   await plugins.register(saveSample);
+
+  // 注册出码插件
+  CodeGenPlugin.pluginName = 'CodeGenPlugin';
+  await plugins.register(CodeGenPlugin);
 
   DataSourcePanePlugin.pluginName = 'DataSourcePane';
   // 插件参数声明 & 传递，参考：https://www.yuque.com/lce/doc/ibh9fh#peEmG
@@ -172,34 +204,6 @@ const registerDefaultPlugins = async () => {
 
   CodeEditor.pluginName = 'CodeEditor';
   await plugins.register(CodeEditor);
-
-  // 注册出码插件
-  CodeGenPlugin.pluginName = 'CodeGenPlugin';
-  await plugins.register(CodeGenPlugin);
-
-  const previewSample = (ctx: ILowCodePluginContext) => {
-    return {
-      name: 'previewSample',
-      async init() {
-        const { skeleton } = ctx;
-        skeleton.add({
-          name: 'previewSample',
-          area: 'topArea',
-          type: 'Widget',
-          props: {
-            align: 'right',
-          },
-          content: (
-            <Button type="primary" onClick={() => {}}>
-              预览
-            </Button>
-          ),
-        });
-      },
-    };
-  };
-  previewSample.pluginName = 'previewSample';
-  await plugins.register(previewSample);
 
   console.log('完成内置插件注册')
 }

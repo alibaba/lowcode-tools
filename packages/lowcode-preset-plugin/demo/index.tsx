@@ -1,5 +1,7 @@
 import init, { editor, project, material, setters } from '../src/index';
 import { createFetchHandler } from '@alilc/lowcode-datasource-fetch-handler'
+import { getPageSchema } from '../src/utils';
+
 const LCE_CONTAINER = document.getElementById('lce-container');
 
 const config =  {
@@ -16,6 +18,11 @@ const config =  {
   ],
   requestHandlersMap: {
     fetch: createFetchHandler()
+  },
+  presetConfig: {
+    logo: {
+      logo: 'https://cdn.npmmirror.com/npmmirror-logo.png'
+    }
   }
 };
 
@@ -44,12 +51,3 @@ const config =  {
     };
   }, [], LCE_CONTAINER, config);
 })();
-
-function getPageSchema() {
-  const schema = JSON.parse(
-    window.localStorage.getItem('projectSchema') || '{}'
-  );
-
-  const pageSchema = schema?.componentsTree?.[0];
-  return pageSchema;
-};

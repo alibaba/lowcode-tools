@@ -23,6 +23,7 @@ module.exports = ({ onGetWebpackConfig }) => {
     config.merge({
       entry: {
         lowcode: hasTsx ? require.resolve(`./demo/index.tsx`) : require.resolve(`./demo/index.ts`),
+        preview: require.resolve(`./demo/preview.tsx`) ,
       },
     });
     config
@@ -41,17 +42,17 @@ module.exports = ({ onGetWebpackConfig }) => {
     
     config.externals(externals);
 
-    // config
-    //   .plugin('preview')
-    //   .use(HtmlWebpackPlugin, [
-    //     {
-    //       inject: false,
-    //       templateParameters: {
-    //       },
-    //       template: require.resolve('./public/preview.html'),
-    //       filename: 'preview.html',
-    //     },
-    //   ]);
+    config
+      .plugin('preview')
+      .use(HtmlWebpackPlugin, [
+        {
+          inject: false,
+          templateParameters: {
+          },
+          template: require.resolve('./public/preview.html'),
+          filename: 'preview.html',
+        },
+      ]);
 
     config.plugins.delete('hot');
     config.devServer.hot(false);
