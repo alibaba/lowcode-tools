@@ -1,4 +1,4 @@
-import init, { editor, project, material, setters } from '@alifd/lowcode-preset-plugin';
+import init, { editor, project, material, setters, config } from '@alifd/lowcode-preset-plugin';
 import mergeWith from 'lodash/mergeWith';
 {{{setterImportStr}}}
 
@@ -180,12 +180,17 @@ init(() => {
       })
 
       if (baseLibrary && baseLibrary === 'rax') {
-        editor.set('renderEnv', 'rax');
-        project.onRendererReady(() => {
-          editor.get('designer').currentDocument.simulator._iframe.onload = () => {
-            editor.get('designer').currentDocument.simulator.set('device', 'phone');
-          }
-        });
+        if (isNewEngineVersion) {
+          config.set('renderEnv', 'rax');
+          config.set('simulatorUrl', undefined);
+        } else {
+          editor.set('renderEnv', 'rax');
+          project.onRendererReady(() => {
+            editor.get('designer').currentDocument.simulator._iframe.onload = () => {
+              editor.get('designer').currentDocument.simulator.set('device', 'phone');
+            }
+          });
+        }
       }
 
       if (isNewEngineVersion) {

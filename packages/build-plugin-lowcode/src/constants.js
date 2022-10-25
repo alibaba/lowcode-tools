@@ -10,6 +10,7 @@ const COMMON_EXTERNALS = {
   '@ali/visualengine-utils': 'var window.VisualEngineUtils',
   '@ali/lowcode-engine': 'var window.AliLowCodeEngine',
   '@alilc/lowcode-engine': 'var window.AliLowCodeEngine',
+  '@ali/lowcode-rax-renderer': 'var window.alilcLowcodeRaxRenderer',
   rax: 'var window.Rax',
   antd: 'var window.antd',
   '@ant-design/icons': 'var window.icons',
