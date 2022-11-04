@@ -18,7 +18,9 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@alilc/lowcode-engine": "^1.0.0"
+  },
   "peerDependencies": {
     "react": "^16.0.0"
   },
