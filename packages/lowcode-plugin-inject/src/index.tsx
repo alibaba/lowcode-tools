@@ -22,10 +22,10 @@ export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext
 }
 
 interface IOptions {
-  injectServerHost: string;
+  injectServerHost?: string;
 }
 
-const Inject = (ctx: ILowCodePluginContext, options: IOptions) => {
+const Inject = (ctx: ILowCodePluginContext, options: IOptions = {}) => {
   if (options?.injectServerHost) {
     setInjectServerHost(options.injectServerHost);
   }
