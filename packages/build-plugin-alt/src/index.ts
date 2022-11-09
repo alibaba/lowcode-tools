@@ -12,6 +12,7 @@ import injectConfig from './inject/config';
 import makeInjectInfo from './inject/makeInjectInfo';
 import injectApis from './inject/apis';
 import dropMinicss from './utils/dropMinicss';
+import { getIp } from './utils/getIp';
 
 interface IOpitons {
   type: 'setter' | 'plugin' | 'component';
@@ -19,10 +20,11 @@ interface IOpitons {
   openUrl: string;
   generateMeta: boolean;
   library: string;
+  usePrivateIp: boolean;
 }
 
 const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, log }, options) => {
-  const { type, inject, openUrl, generateMeta = true, library } = options as unknown as IOpitons;
+  const { type, inject, openUrl, generateMeta = true, library, usePrivateIp } = options as unknown as IOpitons;
   const { command, rootDir, userConfig, pkg } = context;
   const mainFilePrefix = path.join(rootDir, 'src', (pkg.main as string).replace(/lib\/(.*).js/, "$1"));
   let mainFile = `${mainFilePrefix}.tsx`;
@@ -91,7 +93,12 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
 
     onHook('before.start.load', ({ args }) => {
       if (inject) {
-        makeInjectInfo({ pkg, host: args.host || '127.0.0.1', port: args.port, type, library });
+        let host = '127.0.0.1';
+        if (usePrivateIp) {
+          host = getIp();
+        }
+        console.log(host);
+        makeInjectInfo({ pkg, host, port: args.port, type, library });
         injectApis();
       }
     });

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- `feat` 新增配置项 usePrivateIp，为 true 时 injectInfo 使用 private ip 而非 local ip。
+
 ## 1.2.2
 
 - `fix` inject 接口监听 0.0.0.0，避免 localhost 和 127.0.0.1 没有匹配的情况
