@@ -287,7 +287,9 @@ export async function injectComponents(components) {
     const { library } = injectedComponents[name];
     const pascalName = pascal(name);
     libraryMap[name] = library || pascalName;
-    componentsMap[pascalName] = window[`${pascalName}Meta`]?.components?.find(item => item.componentName === pascalName)?.npm;
+    window[`${pascalName}Meta`]?.components?.forEach((item) => {
+      componentsMap[item.componentName] = item.npm;
+    })
   })
   const injectedComponentsForRenderer = await buildComponents(libraryMap, componentsMap, undefined);
   if (Object.keys(injectedComponents).length > 0) {
