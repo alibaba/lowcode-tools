@@ -48,6 +48,8 @@ const STATIC_RESOURCES = {
   engineExtJsUrl: 'https://g.alicdn.com/ali-lowcode/lowcode-engine-ext/1.0.20/engine-ext.js',
   enginePresetJsUrl:
     'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.8/dist/editor-preset-plugin.js',
+  raxRenderJsUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.umd.js',
+  raxRenderCssUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.css',
 };
 
 const ALILC_STATIC_RESOURCES = {
@@ -66,6 +68,8 @@ const ALILC_STATIC_RESOURCES = {
     'https://alifd.alicdn.com/npm/@alilc/lowcode-engine-ext@1.0.4/dist/js/engine-ext.js',
   enginePresetJsUrl:
     'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.8/dist/editor-preset-plugin.js',
+  raxRenderJsUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.umd.js',
+  raxRenderCssUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.css',
 };
 
 const STATIC_RESOURCES_MAP = {

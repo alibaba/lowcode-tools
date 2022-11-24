@@ -8,7 +8,9 @@
     />
     <title>App 渲染器</title>
     <link href="https://g.alicdn.com/code/lib/alifd__next/1.23.20/next.min.css" rel="stylesheet" />
-    <link href="https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.css" rel="stylesheet" />
+    <% if (isRax && typeof raxRenderCssUrl === 'string') { %>
+      <link href="<%= raxRenderCssUrl %>" rel="stylesheet" />
+    <% } %>
     <link href="<%= previewCssUrl %>" rel="stylesheet" />
   </head>
   <body>
@@ -18,8 +20,10 @@
         locale: 'zh_CN',
       };
     </script>
-    <script src="https://g.alicdn.com/code/lib/rax/1.1.0/rax.umd.min.js"></script>
-    <script src="https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.umd.js"></script>
+    <% if (isRax && typeof raxRenderJsUrl === 'string') { %>
+      <script src="https://g.alicdn.com/code/lib/rax/1.1.0/rax.umd.min.js"></script>
+      <script src="<%= raxRenderJsUrl %>"></script>
+    <% } %>
     <script src="https://g.alicdn.com/code/lib/react/16.9.0/umd/react.development.js"></script>
     <script src="https://g.alicdn.com/code/lib/react-dom/16.9.0/umd/react-dom.development.js"></script>
     <script src="https://g.alicdn.com/code/lib/prop-types/15.7.2/prop-types.js"></script>

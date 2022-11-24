@@ -392,7 +392,13 @@ async function start(options, pluginOptions) {
   const setterImportStr = Object.keys(setterMap || {})
     .map((item) => {
       _setterMap += `\n  ${item},`;
-      return `import ${item} from '${setterMap[item]}';`;
+      const setterStr = setterMap[item];
+      const lastIndexOfAt = setterStr.lastIndexOf('@');
+      let npmName = setterStr;
+      if (lastIndexOfAt > 0) {
+        npmName = setterStr.slice(0, lastIndexOfAt);
+      }
+      return `import ${item} from '${npmName}';`;
     })
     .join('\n');
   _setterMap += '\n}';
@@ -475,6 +481,8 @@ async function start(options, pluginOptions) {
         inject: false,
         templateParameters: {
           previewCssUrl: '',
+          isRax: baseLibrary === 'rax',
+          ...STATIC_RESOURCES_MAP[engineScope],
         },
         template: require.resolve('./public/preview.html'),
         filename: 'preview.html',
@@ -735,6 +743,9 @@ async function bundleEditorView(
     fullbackMeta = 'default',
     lowcodeDir = 'lowcode',
     entryPath,
+    type = 'component',
+    setterName,
+    presetConfig = {},
   } = pluginOptions || {};
   const metaExportName = `${PARSED_NPM_NAME.uniqueName}Meta`;
   const advancedRenderUrls = {};
@@ -784,6 +795,9 @@ async function bundleEditorView(
     setterMap: _setterMap,
     metaPathMap: JSON.stringify(metaPathMap),
     fullbackMeta,
+    setterName: setterName || '',
+    type,
+    presetConfig: JSON.stringify(presetConfig),
   };
   const indexJs = generateEntry({
     template: 'index.jsx',
@@ -878,6 +892,8 @@ async function bundleEditorView(
         inject: false,
         templateParameters: {
           previewCssUrl: './preview.css',
+          isRax: baseLibrary === 'rax',
+          ...STATIC_RESOURCES_MAP[engineScope],
         },
         template: require.resolve('./public/preview.html'),
         filename: 'preview.html',
