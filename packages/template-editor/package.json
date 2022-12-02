@@ -1,0 +1,21 @@
+{
+  "name": "@alilc/lowcode-template-editor",
+  "version": "1.0.2",
+  "description": "Ali lowCode engine editor template",
+  "main": "index.js",
+  "scripts": {
+    "pub": "npm publish",
+    "beta": "npm publish --tag beta"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-tools.git",
+    "directory": "packages/template-plugin"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "JackLian",
+  "license": "MIT"
+}

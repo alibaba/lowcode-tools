@@ -4,6 +4,7 @@ import * as path from 'path';
 import initComponent from './component';
 import initSetter from './setter';
 import initPlugin from './plugin';
+import initEditor from './editor';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers'
 
@@ -19,12 +20,16 @@ const getQuestions = ({ argv }) => {
           value: 'component',
         },
         {
-          name: '组件设置器（setter）',
+          name: '设置器 (setter)',
           value: 'setter',
         },
         {
-          name: '设计器插件（plugin）',
+          name: '插件 (plugin)',
           value: 'plugin',
+        },
+        {
+          name: '编辑器 (editor)',
+          value: 'editor',
         },
       ]
     },
@@ -60,6 +65,7 @@ const initMap = {
   component: initComponent,
   setter: initSetter,
   plugin: initPlugin,
+  editor: initEditor,
 };
 
 const main = async () => {
@@ -76,4 +82,3 @@ const main = async () => {
 }
 
 main();
-
