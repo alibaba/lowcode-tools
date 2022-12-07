@@ -9,6 +9,7 @@ export interface LowcodeOptions {
   noParse?: boolean; // 关闭自动解析生成 lowcode meta
   categories?: string[]; // 组件在组件面板中的分类
   groups?: string[]; // 组件在组件面板中的 tab 分组
+  group?:string; //如果组件meta没有group， 会以此做为group, 有则使用组件meta上的
   baseLibrary?: 'react'|'rax';
   setterMap?: SetterMap; // 注入 setter
 }

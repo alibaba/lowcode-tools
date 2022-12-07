@@ -104,6 +104,8 @@ const componentMetas = [{{{ components }}}];
 const components = [];
 const npmInfo = {{{ npmInfo }}};
 componentMetas.forEach(meta => {
+
+  let group = '{{{group}}}';
   if (Array.isArray(meta)) {
     components.push(
       ...meta.map((item) => {
@@ -119,6 +121,7 @@ componentMetas.forEach(meta => {
           };
         }
         item.npm = { ...npmInfo, ...(item.npm || {}) };
+        item.group = item.group || group;
         return fillRealVersion(item);
       }),
     );
@@ -137,6 +140,7 @@ componentMetas.forEach(meta => {
           };
         }
         item.npm = { ...npmInfo, ...(item.npm || {}) };
+        item.group = item.group || group;
         return fillRealVersion(item);
       }),
     );
@@ -153,6 +157,7 @@ componentMetas.forEach(meta => {
       };
     }
     meta.npm = { ...npmInfo, ...(meta.npm || {}) };
+    item.group = item.group || group;
     components.push(fillRealVersion(meta));
   }
 });

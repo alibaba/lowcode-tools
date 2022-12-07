@@ -292,7 +292,7 @@ async function build(options, pluginOptions, execCompile) {
     }),
   );
   const metaPathMap = {};
-  metaPaths.forEach((item) => {    
+  metaPaths.forEach((item) => {
     metaPathMap[path.basename(item).replace(path.extname(item), '')] = item;
     // metaPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
   });
@@ -692,6 +692,7 @@ async function bundleMetaV2(options, pluginOptions, execCompile, metaType) {
       version: package.version,
       packageName: package.name,
       basicLibraryVersion: JSON.stringify(customBasicLibraryVersion || BASIC_LIBRARY_VERSION),
+      group: pluginOptions.group,
     },
   });
   if (!execCompile || getAllTask().includes(`lowcode-meta-${metaType}`)) return metaPath;
