@@ -25,7 +25,7 @@
     "@alilc/lowcode-types": "^1.0.1",
     "@alilc/lowcode-utils": "^1.0.1",
     "axios": "^0.21.4",
-    "build-scripts-config": "^3.0.0",
+    "build-scripts-config": "^3.0.3",
     "chokidar": "^3.5.3",
     "cross-spawn-promise": "^0.10.2",
     "driver-universal": "^3.4.0",

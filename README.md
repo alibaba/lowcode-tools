@@ -14,4 +14,4 @@
 
 ## 使用文档
 
-https://www.yuque.com/lce/doc/ulvlkz
+https://lowcode-engine.cn/site/docs/guide/expand/editor/cli
