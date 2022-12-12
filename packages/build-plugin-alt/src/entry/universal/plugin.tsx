@@ -24,7 +24,7 @@ export default async ({ type, demoPlugin = undefined }) => {
       await plugins.register(plugin);
     }
   }
-  // plugin API 见 https://yuque.antfin.com/ali-lowcode/docs/cdukce
+  // plugin API 见 https://lowcode-engine.cn/site/docs/api/plugins
   (SchemaPlugin as any).pluginName = 'SchemaPlugin';
   await registerPlugin(SchemaPlugin);
   (CodeEditor as any).pluginName = 'CodeEditor';
@@ -253,4 +253,3 @@ export default async ({ type, demoPlugin = undefined }) => {
 
   await registerPlugin(previewSample);
 }
-

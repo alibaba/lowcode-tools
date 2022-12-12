@@ -25,7 +25,7 @@ const registerDefaultPlugins = async (presetConfig) => {
 
   // await plugins.register(Inject);
 
-  // plugin API 见 https://lowcode-engine.cn/docV2/ibh9fh
+  // plugin API 见 https://lowcode-engine.cn/site/docs/api/plugins
   SchemaPlugin.pluginName = 'SchemaPlugin';
   await plugins.register(SchemaPlugin);
 
@@ -173,7 +173,7 @@ const registerDefaultPlugins = async (presetConfig) => {
             </Button>
           ),
         });
-        
+
         hotkey.bind('command+s', (e) => {
           e.preventDefault();
           // saveSchema();
@@ -189,7 +189,7 @@ const registerDefaultPlugins = async (presetConfig) => {
   await plugins.register(CodeGenPlugin);
 
   DataSourcePanePlugin.pluginName = 'DataSourcePane';
-  // 插件参数声明 & 传递，参考：https://www.yuque.com/lce/doc/ibh9fh#peEmG
+  // 插件参数声明 & 传递，参考：https://lowcode-engine.cn/site/docs/api/plugins#设置插件参数版本示例
   await plugins.register(DataSourcePanePlugin, {
     importPlugins: [],
     dataSourceTypes: [
