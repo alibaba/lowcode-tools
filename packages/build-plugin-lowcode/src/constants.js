@@ -48,8 +48,8 @@ const STATIC_RESOURCES = {
   engineExtJsUrl: 'https://g.alicdn.com/ali-lowcode/lowcode-engine-ext/1.0.20/engine-ext.js',
   enginePresetJsUrl:
     'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.8/dist/editor-preset-plugin.js',
-  raxRenderJsUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.umd.js',
-  raxRenderCssUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.css',
+  raxRenderJsUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.18/dist/index.umd.js',
+  raxRenderCssUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.18/dist/index.css',
 };
 
 const ALILC_STATIC_RESOURCES = {
@@ -57,19 +57,19 @@ const ALILC_STATIC_RESOURCES = {
   themeStyleUrl:
     'https://alifd.alicdn.com/npm/@alifd/theme-lowcode-dark@0.6.1/dist/next.var.min.css',
   engineCoreCssUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine@1.0.12/dist/css/engine-core.css',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.0.18/dist/css/engine-core.css',
   engineExtCssUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine-ext@1.0.4/dist/css/engine-ext.css',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/css/engine-ext.css',
   enginePresetCssUrl:
     'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.8/dist/editor-preset-plugin.css',
   engineCoreJsUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine@1.0.12/dist/js/engine-core.js',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.0.18/dist/js/engine-core.js',
   engineExtJsUrl:
-    'https://alifd.alicdn.com/npm/@alilc/lowcode-engine-ext@1.0.4/dist/js/engine-ext.js',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/js/engine-ext.js',
   enginePresetJsUrl:
     'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.8/dist/editor-preset-plugin.js',
-  raxRenderJsUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.umd.js',
-  raxRenderCssUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.12/dist/index.css',
+  raxRenderJsUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.18/dist/index.umd.js',
+  raxRenderCssUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.18/dist/index.css',
 };
 
 const STATIC_RESOURCES_MAP = {
