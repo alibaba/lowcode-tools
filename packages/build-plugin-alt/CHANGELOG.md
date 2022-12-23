@@ -3,6 +3,7 @@
 ## 1.3.0
 
 - `feat` 新增配置项 usePrivateIp，为 true 时 injectInfo 使用 private ip 而非 local ip。
+- `fix` babelPluginMeta 对 package 中一部分 meta 未定义的情况处理错误
 
 ## 1.2.2
 
