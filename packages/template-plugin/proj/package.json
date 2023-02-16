@@ -19,7 +19,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@alilc/lowcode-engine": "^1.0.0"
+    "@alilc/lowcode-types": "^1.1.1"
   },
   "peerDependencies": {
     "react": "^16.0.0"
