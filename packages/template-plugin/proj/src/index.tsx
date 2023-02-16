@@ -1,24 +1,12 @@
 import * as React from 'react';
-import { ILowCodePluginContext } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import Icon from './icon';
 
-const <%- componentName %> = (ctx: ILowCodePluginContext) => {
+const <%- componentName %> = (ctx: IPublicModelPluginContext, options: any) => {
   return {
-    // 插件对外暴露的数据和方法
-    exports() {
-      return {
-        data: '你可以把插件的数据这样对外暴露',
-        func: () => {
-          console.log('方法也是一样');
-        },
-      }
-    },
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     init() {
-      // 你可以拿到其他插件暴露的方法和属性
-      // const { data, func } = ctx.plugins.pluginA;
-      // func();
-
+      // 你可以拿到插件注册时的初始化参数
       // console.log(options.name);
 
       // 往引擎增加面板
@@ -44,7 +32,7 @@ const <%- componentName %> = (ctx: ILowCodePluginContext) => {
   // 依赖的插件（插件名数组）
   dependencies: [],
   engines: {
-    lowcodeEngine: '^1.0.0', // 插件需要配合 ^1.0.0 的引擎才可运行
+    lowcodeEngine: '^1.1.0', // 插件需要配合 ^1.1.0 的引擎才可运行
   },
 }
 
