@@ -84,7 +84,7 @@ const plugin: IPlugin = ({ context, registerTask, onGetWebpackConfig, onHook, lo
         if (openUrl) {
           openBrowser(openUrl);
         } else {
-          openBrowser('https://lowcode-engine.cn/demo/index.html?debug');
+          openBrowser('https://lowcode-engine.cn/demo/demo-general/index.html?debug');
         }
       } else {
         openBrowser(openUrl || url);
