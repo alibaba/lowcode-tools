@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { ILowCodePluginContext, plugins, setters } from '@alilc/lowcode-engine';
+import { plugins, setters } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext, IPublicTypePlugin } from '@alilc/lowcode-types';
 import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages, setInjectServerHost } from './utils';
 import { Notification } from '@alifd/next';
 
@@ -7,7 +8,7 @@ import { Notification } from '@alifd/next';
 let injectedPluginConfigMap = null;
 let injectedPlugins = [];
 
-export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext) {
+export async function getInjectedPlugin(name: string, ctx: IPublicModelPluginContext) {
   if (!injectedPluginConfigMap) {
     injectedPluginConfigMap = {};
     injectedPlugins = await getInjectedResource('plugin');
@@ -18,6 +19,7 @@ export async function getInjectedPlugin(name: string, ctx: ILowCodePluginContext
       });
     }
   }
+  if (name === undefined) return undefined;
   return injectedPluginConfigMap[name];
 }
 
@@ -25,7 +27,7 @@ interface IOptions {
   injectServerHost?: string;
 }
 
-const Inject = (ctx: ILowCodePluginContext, options: IOptions = {}) => {
+const Inject = (ctx: IPublicModelPluginContext, options: IOptions = {}) => {
   if (options?.injectServerHost) {
     setInjectServerHost(options.injectServerHost);
   }
@@ -33,12 +35,16 @@ const Inject = (ctx: ILowCodePluginContext, options: IOptions = {}) => {
   if (needInject) {
     // 覆盖后续的插件注册逻辑，所有只有本插件后面注册的插件才可以支持 inject 逻辑
     const originalRegister = plugins.register;
-    plugins.register = async function (plugin: any, pluginOptions: any, options: any) {
-      const pluginConfig = plugin(ctx, pluginOptions);
-      // return originalRegister.call(this, plugin, pluginOptions, options);
-      const injectedSameNamePlugin = await getInjectedPlugin(pluginConfig.name, ctx);
+    plugins.register = async function (plugin: IPublicTypePlugin, pluginOptions: any, options: any) {
+      let pluginName = plugin.pluginName;
+      if (!pluginName) {
+        const pluginConfig = plugin(ctx, pluginOptions);
+        // 兼容逻辑
+        pluginName = (pluginConfig as any).name;
+      }
+      const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx);
       if (injectedSameNamePlugin) {
-        injectedPluginConfigMap[pluginConfig.name] = null;
+        injectedPluginConfigMap[pluginName] = null;
         return originalRegister.call(this, injectedSameNamePlugin, pluginOptions, options);
       } else {
         return originalRegister.call(this, plugin, pluginOptions, options);

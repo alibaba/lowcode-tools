@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-plugin-inject",
   "author": "ens",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "lowcode-plugin-inject",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@alifd/next": "^1.25.13",
     "@alilc/lowcode-engine": "^1.0.0",
+    "@alilc/lowcode-types": "^1.1.2",
     "@alilc/lowcode-utils": "^1.0.0",
     "case": "^1.6.3",
     "fetch-jsonp": "^1.2.1",
@@ -35,7 +36,7 @@
     "react": "^16.0.0"
   },
   "devDependencies": {
-    "@alilc/build-plugin-alt": "beta",
+    "@alilc/build-plugin-alt": "^1.0.0",
     "@alib/build-scripts": "^0.1.32",
     "@alifd/theme-lowcode-light": "^0.2.1",
     "@recore/config": "^2.0.6",
