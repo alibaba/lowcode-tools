@@ -14,8 +14,12 @@ export async function getInjectedPlugin(name: string, ctx: IPublicModelPluginCon
     injectedPlugins = await getInjectedResource('plugin');
     if (injectedPlugins && injectedPlugins.length > 0) {
       injectedPlugins.forEach((item: any) => {
-        const config = item.module(ctx);
-        injectedPluginConfigMap[config.name] = item.module;
+        let pluginName = item.module?.pluginName;
+        if (!pluginName) {
+          const config = item.module(ctx);
+          pluginName = config?.name;
+        }
+        injectedPluginConfigMap[pluginName] = item.module;
       });
     }
   }

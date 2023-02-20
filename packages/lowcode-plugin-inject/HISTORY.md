@@ -1,3 +1,6 @@
+# 1.2.2
+* fix: 继续兼容新版插件 pluginName 的声明方式
+
 # 1.2.1
 * fix: 兼容新版插件 pluginName 的声明方式
 
