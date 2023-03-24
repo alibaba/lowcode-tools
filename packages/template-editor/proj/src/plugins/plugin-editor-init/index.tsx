@@ -1,15 +1,15 @@
-import { ILowCodePluginContext } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { injectAssets } from '@alilc/lowcode-plugin-inject';
 import assets from '../../services/assets.json';
 import { getProjectSchema } from '../../services/mockService';
-const EditorInitPlugin = (ctx: ILowCodePluginContext, options: any) => {
+const EditorInitPlugin = (ctx: IPublicModelPluginContext, options: any) => {
   return {
     async init() {
       const { material, project, config } = ctx;
       const scenarioName = options['scenarioName'];
       const scenarioDisplayName = options['displayName'] || scenarioName;
       const scenarioInfo = options['info'] || {};
-      // 保存在config中用于引擎范围其他插件使用
+      // 保存在 config 中用于引擎范围其他插件使用
       config.set('scenarioName', scenarioName);
       config.set('scenarioDisplayName', scenarioDisplayName);
       config.set('scenarioInfo', scenarioInfo);
