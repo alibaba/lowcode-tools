@@ -1,18 +1,17 @@
-import { ILowCodePluginContext } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { Button } from '@alifd/next';
 import {
   saveSchema,
 } from '../../services/mockService';
 
 // 保存功能示例
-const PreviewSamplePlugin = (ctx: ILowCodePluginContext) => {
+const PreviewSamplePlugin = (ctx: IPublicModelPluginContext) => {
   return {
     async init() {
       const { skeleton, config } = ctx;
       const doPreview = () => {
         const scenarioName = config.get('scenarioName');
-        console.log('go preview with scenarioName:',scenarioName );
-        saveSchema(scenarioName);;
+        saveSchema(scenarioName);
         setTimeout(() => {
           const search = location.search ? `${location.search}&scenarioName=${scenarioName}` : `?scenarioName=${scenarioName}`;
           window.open(`./preview.html${search}`);

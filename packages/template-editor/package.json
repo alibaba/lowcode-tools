@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-template-editor",
-  "version": "1.0.4",
-  "description": "Ali lowCode engine editor template",
+  "version": "1.0.5",
+  "description": "LowCodeEngine editor template",
   "main": "index.js",
   "scripts": {
     "pub": "npm publish",

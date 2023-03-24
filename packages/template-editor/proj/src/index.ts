@@ -15,13 +15,17 @@ import DefaultSettersRegistryPlugin from './plugins/plugin-default-setters-regis
 import LoadIncrementalAssetsWidgetPlugin from './plugins/plugin-load-incremental-assets-widget';
 import SaveSamplePlugin from './plugins/plugin-save-sample';
 import PreviewSamplePlugin from './plugins/plugin-preview-sample';
+import CustomSetterSamplePlugin from './plugins/plugin-custom-setter-sample';
 import SetRefPropPlugin from '@alilc/lowcode-plugin-set-ref-prop';
 import LogoSamplePlugin from './plugins/plugin-logo-sample';
 import SimulatorLocalePlugin from './plugins/plugin-simulator-locale';
+import lowcodePlugin from './plugins/plugin-lowcode-component';
 import appHelper from './appHelper';
 import './global.scss';
 
 async function registerPlugins() {
+  await plugins.register(InjectPlugin);
+
   await plugins.register(EditorInitPlugin, {
     scenarioName: 'general',
     displayName: '综合场景',
@@ -42,8 +46,6 @@ async function registerPlugins() {
       ],
     },
   });
-
-  await plugins.register(InjectPlugin);
 
   // 设置内置 setter 和事件绑定、插件绑定面板
   await plugins.register(DefaultSettersRegistryPlugin);
@@ -68,8 +70,7 @@ async function registerPlugins() {
 
   await plugins.register(LoadIncrementalAssetsWidgetPlugin);
 
-
-  // 插件参数声明 & 传递，参考：https://lowcode-engine.cn/site/docs/api/plugins#设置插件参数版本示例
+  // 插件参数声明 & 传递，参考：https://lowcode-engine.cn/site/docs/api/plugins#%E8%AE%BE%E7%BD%AE%E6%8F%92%E4%BB%B6%E5%8F%82%E6%95%B0%E7%89%88%E6%9C%AC%E7%A4%BA%E4%BE%8B
   await plugins.register(DataSourcePanePlugin, {
     importPlugins: [],
     dataSourceTypes: [
@@ -91,8 +92,12 @@ async function registerPlugins() {
 
   await plugins.register(PreviewSamplePlugin);
 
+  await plugins.register(CustomSetterSamplePlugin);
+
   // 设计器区域多语言切换
   await plugins.register(SimulatorLocalePlugin);
+
+  await plugins.register(lowcodePlugin);
 };
 
 (async function main() {
