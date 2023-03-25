@@ -1,0 +1,7 @@
+node_modules/
+build/
+dist/
+es/
+lib/
+miniapp-preview/
+types/

@@ -1,0 +1,25 @@
+{
+  "name": "@alilc/rax-single-component-template",
+  "version": "0.1.1",
+  "description": "rax 单组件模板",
+  "files": [
+    "projectTemplate/"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "f2elint-scan": "fie lint",
+    "f2elint-fix": "fie lint -fix"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  }
+}

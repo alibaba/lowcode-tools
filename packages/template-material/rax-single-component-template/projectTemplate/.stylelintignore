@@ -1,0 +1,11 @@
+node_modules/
+build/
+dist/
+es/
+lib/
+miniapp-preview/
+types/
+**/*.min.css
+**/*-min.css
+**/*.bundle.css
+

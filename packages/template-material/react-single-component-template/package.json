@@ -1,0 +1,36 @@
+{
+  "name": "@alilc/react-single-component-template",
+  "version": "0.1.2",
+  "description": "react 单组件模板",
+  "files": [
+    "projectTemplate/"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "stylePath": "style.js",
+  "scripts": {
+    "eslint": "eslint --cache --ext .js,.jsx ./",
+    "eslint:fix": "npm run eslint -- --fix",
+    "stylelint": "stylelint \"**/*.{css,scss,less}\"",
+    "lint": "npm run eslint && npm run stylelint",
+    "f2elint-scan": "f2elint scan",
+    "f2elint-fix": "f2elint fix"
+  },
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentConfig": {
+    "name": "ExampleComponent",
+    "title": "demo component",
+    "category": "Information"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

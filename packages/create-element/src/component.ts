@@ -4,6 +4,7 @@ import { hideBin } from 'yargs/helpers';
 import { fs as fieFs } from 'fie-api';
 import * as inquirer from 'inquirer';
 import Base from './base';
+import { transformFileName } from './utils';
 
 class InitComponent extends Base {
   constructor(options) {
@@ -19,7 +20,8 @@ class InitComponent extends Base {
         evaluate: /<%([\s\S]+?)%>/g,
         interpolate: /<%=([\s\S]+?)%>/g,
         escape: /<%-([\s\S]+?)%>/g
-      }
+      },
+      filenameTransformer: transformFileName
     };
     fieFs.copyDirectory(copyParams);
   }
@@ -32,18 +34,18 @@ export default async (answers) => {
     message: '请选择包模式',
     choices: [{
       name: 'react-单组件',
-      value: 'pc-single',
+      value: 'react-single',
     }, {
       name: 'react-组件库',
-      value: 'pc-multiple',
+      value: 'react-multiple',
     }, {
       name: 'rax-单组件',
-      value: 'mobile-single',
+      value: 'rax-single',
     }, {
       name: 'rax-组件库',
-      value: 'mobile-multiple',
+      value: 'rax-multiple',
     }],
-    default: 'pc-single',
+    default: 'react-single',
   }];
   const result = await inquirer.prompt(promptList);
   new InitComponent({
@@ -53,7 +55,7 @@ export default async (answers) => {
       ...answers,
       engineScope: '@alilc',
     },
-    templatePkg: `@alifd/${result.packageType}-component-template`,
+    templatePkg: `@alilc/${result.packageType}-component-template`,
     prefix: 'lowcode-setter',
   }).init();
 }

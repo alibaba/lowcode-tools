@@ -1,0 +1,17 @@
+{
+  "type": "rax",
+  "inlineStyle": false,
+  "targets": [
+    "web",
+    "miniapp",
+    "wechat-miniprogram"
+  ],
+  "library": "MyBizComponent",
+  "plugins": [
+    "build-plugin-component-multiple",
+    "build-plugin-doc-multiple"
+  ],
+  "alias": {
+    "components": "./src/components"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "name": "<%= projectName %>",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "unpkg": "dist/index.umd.js",
+  "typings": "types/index.d.ts",
+  "files": [
+    "build",
+    "dist",
+    "lib",
+    "es",
+    "types"
+  ],
+  "logo": "https://gw.alicdn.com/imgextra/i2/O1CN01XA2RsI1fjjzUmc2kh_!!6000000004043-2-tps-243-240.png",
+  "scripts": {
+    "start": "build-scripts start",
+    "build": "build-scripts build",
+    "lowcode:dev": "build-scripts start --config ./build.lowcode.js",
+    "lowcode:build": "build-scripts build --config ./build.lowcode.js",
+    "lint": "fie lint",
+    "f2elint-scan": "f2elint scan",
+    "f2elint-fix": "f2elint fix",
+    "prepublishOnly": "npm run build && npm run lowcode:build"
+  },
+  "keywords": [
+    "Rax"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.(ts|tsx)": [
+      "tslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "docs/**/*.md": [
+      "prettier --write",
+      "git add"
+    ],
+    "@(docs|src)/**/*.@(js|jsx|ts|tsx)": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "peerDependencies": {
+    "rax": "^1.0.11"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.20",
+    "@alifd/build-plugin-lowcode": "^0.3.0",
+    "@types/rax": "^1.0.5",
+    "build-plugin-component-multiple": "^1.0.0-beta.13",
+    "build-plugin-doc-multiple": "^1.0.0-beta.8",
+    "eslint-plugin-jsx-plus": "^0.1.0",
+    "driver-universal": "^3.1.0",
+    "execa": "^2.0.5",
+    "expect.js": "^0.3.1",
+    "f2elint": "^1.2.0",
+    "husky": "^3.0.1",
+    "iceworks": "^3.4.5",
+    "jest": "^24.8.0",
+    "jest-cli": "^24.8.0",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.19.1",
+    "rax": "^1.0.11",
+    "ts-loader": "^6.0.4",
+    "ts-mocha": "^8.0.0",
+    "ts-node": "^9.1.1",
+    "tslint": "^5.18.0",
+    "tslint-config-ali": "^0.2.4",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "rax-image": "^2.3.2",
+    "rax-text": "^2.1.2",
+    "rax-view": "^2.2.0",
+    "tslib": "^2.0.1"
+  },
+  "resolutions": {
+    "webpack": "^4.46.x"
+  },
+  "nyc": {
+    "include": "src"
+  },
+  <% if (!_.isUndefined((arguments[0] || {}).group)) { %>
+    "publishConfig": {
+      "registry": "https://registry.npm.alibaba-inc.com"
+    },
+    "homepage": "https://mc-fusion.alibaba-inc.com/unpkg/<%= projectName %>/build/index.html",
+    "repository": {
+      "type": "git",
+      "url": "git@gitlab.alibaba-inc.com:<%=group%>/<%=project%>.git"
+    },
+  <% } %>
+  "componentConfig": {
+    "isComponentLibrary": 0
+  }
+}

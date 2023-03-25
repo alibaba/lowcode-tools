@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200rpx;
+}
+
+.name {
+  color: #222;
+  font-size: 80rpx;
+}
+
+.content {
+  color: #666;
+  font-size: 40rpx;
+}

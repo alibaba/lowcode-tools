@@ -1,0 +1,27 @@
+{
+  "name": "@alilc/rax-multiple-component-template",
+  "version": "0.1.1",
+  "description": "rax 组件库模板",
+  "main": "lib/index.js",
+  "files": [
+    "projectTemplate/",
+    "singleComponentTemplate/",
+    "singleDocTemplate/"
+  ],
+  "scripts": {
+    "f2elint-scan": "fie lint",
+    "f2elint-fix": "fie lint -fix"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+es/
+lib/
+miniapp-preview/
+types/
+**/*.min.js
+**/*-min.js
+**/*.bundle.js
