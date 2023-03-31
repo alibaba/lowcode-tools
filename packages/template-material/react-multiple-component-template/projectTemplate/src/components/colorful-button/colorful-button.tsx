@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createElement } from 'react';
 import { Button } from '@alifd/next';
-// import { ButtonProps } from '@alifd/next/types/button';
 import './index.scss';
 
 export interface ColorfulButtonProps {
@@ -9,8 +8,8 @@ export interface ColorfulButtonProps {
    * 类型
    */
   type?: "primary" | "secondary" | "normal";
-  color?: 'string';
-  style?: 'object'
+  color?: string;
+  style?: object;
 }
 
 const ColorfulButton: React.FC<ColorfulButtonProps> = function ColorfulButton({

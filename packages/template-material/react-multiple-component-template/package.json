@@ -1,11 +1,9 @@
 {
   "name": "@alilc/react-multiple-component-template",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "react 组件库模板",
   "files": [
-    "projectTemplate/",
-    "singleComponentTemplate/",
-    "singleDocTemplate/"
+    "projectTemplate/*"
   ],
   "scripts": {
     "f2elint-scan": "fie lint",

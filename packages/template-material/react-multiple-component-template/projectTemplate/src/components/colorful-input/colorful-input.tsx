@@ -5,8 +5,8 @@ import { bizCssPrefix } from '../../variables';
 import './index.scss';
 
 export interface ColorfulInputProps {
-  color?: 'string';
-  style?: 'object'
+  color?: string;
+  style?: object;
 }
 
 const ColorfulInput: React.FC<ColorfulInputProps> = function ColorfulInput({

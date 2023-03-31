@@ -58,8 +58,7 @@
     "@umijs/plugin-sass": "^1.1.1",
     "dumi": "^1.1.49",
     "dumi-theme-default": "^1.1.24",
-    "f2elint": "^1.2.0",
-    "node-sass": "^8.0.0"
+    "f2elint": "^1.2.0"
   },
   "dependencies": {
     "moment": "^2.29.4",
