@@ -13,7 +13,6 @@ const COMMON_EXTERNALS = {
   '@ali/lowcode-rax-renderer': 'var window.alilcLowcodeRaxRenderer',
   rax: 'var window.Rax',
   antd: 'var window.antd',
-  '@ant-design/icons': 'var window.icons',
   '@alifd/lowcode-preset-plugin': 'var window.PluginLowcodeEditor',
   'monaco-editor/esm/vs/editor/editor.api': 'var window.monaco',
   'monaco-editor/esm/vs/editor/editor.main.js': 'var window.monaco',
