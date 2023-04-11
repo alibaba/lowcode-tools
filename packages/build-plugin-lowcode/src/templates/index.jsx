@@ -170,7 +170,14 @@ init(() => {
         builtinAssets && await handleExtraAssets(assets, builtinAssets);
       }
 
-      assets.packages = basePackages.concat(assets.packages);
+      // 覆盖basePackages中相同library
+      const filterBasePackages = basePackages.filter(bp => 
+        !Array.from(assets.packages).some(ap => 
+          ap.library === bp.library
+        )
+      )
+      assets.packages = assets.packages.concat(filterBasePackages);
+
       assets.packages = assets.packages.map(item => {
         if (item.editUrls && item.editUrls.length) {
           item.renderUrls = item.urls;
