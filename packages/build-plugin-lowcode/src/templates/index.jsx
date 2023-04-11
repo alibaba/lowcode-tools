@@ -171,12 +171,8 @@ init(() => {
       }
 
       // 覆盖basePackages中相同library
-      const filterBasePackages = basePackages.filter(bp => 
-        !Array.from(assets.packages).some(ap => 
-          ap.library === bp.library
-        )
-      )
-      assets.packages = assets.packages.concat(filterBasePackages);
+      const packagesMap = new Map();
+      assets.packages = [...assets.packages, ...basePackages].filter((pkg) => !packagesMap.has(pkg.library) && packagesMap.set(pkg.library, 1))
 
       assets.packages = assets.packages.map(item => {
         if (item.editUrls && item.editUrls.length) {
