@@ -170,7 +170,10 @@ init(() => {
         builtinAssets && await handleExtraAssets(assets, builtinAssets);
       }
 
-      assets.packages = basePackages.concat(assets.packages);
+      // 覆盖basePackages中相同library
+      const packagesMap = new Map();
+      assets.packages = [...assets.packages, ...basePackages].filter((pkg) => !packagesMap.has(pkg.library) && packagesMap.set(pkg.library, 1))
+
       assets.packages = assets.packages.map(item => {
         if (item.editUrls && item.editUrls.length) {
           item.renderUrls = item.urls;
