@@ -170,9 +170,16 @@ init(() => {
         builtinAssets && await handleExtraAssets(assets, builtinAssets);
       }
 
-      // 覆盖basePackages中相同library
+       // Overwrite the same library in basePackages
       const packagesMap = new Map();
-      assets.packages = [...basePackages, ...assets.packages].filter((pkg) => !packagesMap.has(pkg.library) && packagesMap.set(pkg.library, 1))
+      const sortedKeys = [...new Set(
+        [...basePackages, ...assets.packages].map((item) => {
+          const { library } = item;
+          packagesMap.set(library, item);
+          return library;
+        })
+      )];
+      assets.packages = sortedKeys.map((key) => packagesMap.get(key));
 
       assets.packages = assets.packages.map(item => {
         if (item.editUrls && item.editUrls.length) {
