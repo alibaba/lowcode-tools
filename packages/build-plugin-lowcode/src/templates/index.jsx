@@ -171,16 +171,14 @@ init(() => {
       }
 
       // Overwrite the same library in basePackages
-      const sortedKeys = [...new Set(
-        [...basePackages, ...assets.packages].map((package) => package.library)
-      )];
       const packagesMap = new Map();
-      [...assets.packages, ...basePackages].forEach((package) => {
-        const { library } = package;
-        if(!packagesMap.has(library)) {
-          packagesMap.set(library, package);
-        }
-      });
+      const sortedKeys = [...new Set(
+        [...basePackages, ...assets.packages].map((item) => {
+          const { library } = item;
+          packagesMap.set(library, item);
+          return library;
+        })
+      )];
       assets.packages = sortedKeys.map((key) => packagesMap.get(key));
 
       assets.packages = assets.packages.map(item => {
