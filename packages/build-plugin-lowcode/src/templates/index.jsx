@@ -172,7 +172,8 @@ init(() => {
 
       // 覆盖basePackages中相同library
       const packagesMap = new Map();
-      assets.packages = [...basePackages, ...assets.packages].filter((pkg) => !packagesMap.has(pkg.library) && packagesMap.set(pkg.library, 1))
+      const tmpPackages = [...assets.packages, ...basePackages].filter((pkg) => !packagesMap.has(pkg.library) && packagesMap.set(pkg.library, pkg));
+      assets.packages = [...new Set([...basePackages, ...assets.packages].map((pkg) => pkg.library))].map((library) => packagesMap.get(library));
 
       assets.packages = assets.packages.map(item => {
         if (item.editUrls && item.editUrls.length) {
