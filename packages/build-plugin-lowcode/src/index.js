@@ -366,6 +366,7 @@ async function start(options, pluginOptions) {
     type = 'component',
     setterName,
     presetConfig = {},
+    customPlugins = [],
   } = pluginOptions || {};
   if (baseLibrary === 'rax' && Array.isArray(extraAssets)) {
     extraAssets.push(
@@ -428,6 +429,7 @@ async function start(options, pluginOptions) {
       setterName: setterName || '',
       type,
       presetConfig: JSON.stringify(presetConfig),
+      customPlugins: JSON.stringify(customPlugins),
     },
   });
   const previewJs = generateEntry({
