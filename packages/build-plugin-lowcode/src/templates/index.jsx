@@ -71,6 +71,7 @@ let assetsName = './assets-dev.json';
 
 const setterMap = {{{setterMap}}};
 const presetConfig = {{{presetConfig}}};
+const customPlugins = {{{customPlugins}}};
 
 const type = '{{{type}}}';
 
