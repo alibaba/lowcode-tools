@@ -18,6 +18,11 @@ const COMMON_EXTERNALS = {
   'monaco-editor/esm/vs/editor/editor.main.js': 'var window.monaco',
 };
 
+const ALILC_COMMON_EXTERNALS = {
+  ...COMMON_EXTERNALS,
+  '@alifd/lowcode-preset-plugin': 'var window.LowcodePresetPlugin',
+};
+
 const DEFAULT_GROUPS = ['精选组件', '原子组件'];
 const DEFAULT_CATEGORIES = [
   '基础元素',
@@ -52,21 +57,21 @@ const STATIC_RESOURCES = {
 };
 
 const ALILC_STATIC_RESOURCES = {
-  themeVariableUrl: 'https://alifd.alicdn.com/npm/@alifd/theme-lowcode-dark@0.6.1/variables.css',
+  themeVariableUrl: 'https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/variables.css',
   themeStyleUrl:
-    'https://alifd.alicdn.com/npm/@alifd/theme-lowcode-dark@0.6.1/dist/next.var.min.css',
+    'https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/dist/next.var.min.css',
   engineCoreCssUrl:
-    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.0.18/dist/css/engine-core.css',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.7-beta.11/dist/css/engine-core.css',
   engineExtCssUrl:
-    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/css/engine-ext.css',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.6-beta.25/dist/css/engine-ext.css',
   enginePresetCssUrl:
-    'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.8/dist/editor-preset-plugin.css',
+    'https://alifd.alicdn.com/npm/@alilc/lowcode-preset-plugin@0.1.2/dist/lowcode-preset-plugin.css',
   engineCoreJsUrl:
-    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.0.18/dist/js/engine-core.js',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.7-beta.11/dist/js/engine-core.js',
   engineExtJsUrl:
-    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/js/engine-ext.js',
+    'https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.6-beta.25/dist/js/engine-ext.js',
   enginePresetJsUrl:
-    'https://alifd.alicdn.com/npm/@alifd/lowcode-preset-plugin@1.1.8/dist/editor-preset-plugin.js',
+    'https://alifd.alicdn.com/npm/@alilc/lowcode-preset-plugin@0.1.2/dist/lowcode-preset-plugin.js',
   raxRenderJsUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.18/dist/index.umd.js',
   raxRenderCssUrl: 'https://alifd.alicdn.com/npm/@alilc/lowcode-rax-renderer@1.0.18/dist/index.css',
 };
@@ -74,6 +79,11 @@ const ALILC_STATIC_RESOURCES = {
 const STATIC_RESOURCES_MAP = {
   '@ali': STATIC_RESOURCES,
   '@alilc': ALILC_STATIC_RESOURCES,
+};
+
+const COMMON_EXTERNALS_MAP = {
+  '@ali': COMMON_EXTERNALS,
+  '@alilc': ALILC_COMMON_EXTERNALS,
 };
 
 const BASIC_LIBRARY_VERSION = {
@@ -111,6 +121,8 @@ const META_TYPES = ['', 'dev', 'web', 'mobile', 'design', 'sketch'];
 module.exports = {
   SUPPORTED_COMMAND,
   COMMON_EXTERNALS,
+  ALILC_COMMON_EXTERNALS,
+  COMMON_EXTERNALS_MAP,
   DEFAULT_GROUPS,
   DEFAULT_CATEGORIES,
   STATIC_RESOURCES,

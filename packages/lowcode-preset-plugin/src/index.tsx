@@ -1,5 +1,6 @@
 import { init, plugins } from '@alilc/lowcode-engine';
 import { createFetchHandler } from '@alilc/lowcode-datasource-fetch-handler'
+import { IPublicTypeEngineOptions, IPublicTypePlugin } from '@alilc/lowcode-types';
 
 import registerDefaultPlugins from './plugins';
 import registerDefaultSetters from './setters';
@@ -25,9 +26,9 @@ const defaultConfig = {
   }
 };
 
-export default async (cb, customPlugins, container, config) => {
+export default async (cb: IPublicTypePlugin, customPlugins: any, container: HTMLElement, config: IPublicTypeEngineOptions & { presetConfig: any }) => {
 
-  const realConfig = { ...defaultConfig, ...(config || {})};
+  const realConfig = { ...defaultConfig, ...(config || {}) };
   const { presetConfig } = realConfig;
 
   await registerDefaultPlugins(presetConfig);

@@ -2,6 +2,7 @@ const { join } = require('path');
 const fs = require('fs-extra');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { version } = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 const { externals } = JSON.parse(fs.readFileSync('./build.json', 'utf8'));
 
@@ -53,6 +54,8 @@ module.exports = ({ onGetWebpackConfig }) => {
           filename: 'preview.html',
         },
       ]);
+
+    // config.plugin('analyzer').use(BundleAnalyzerPlugin);
 
     config.plugins.delete('hot');
     config.devServer.hot(false);

@@ -213,6 +213,7 @@ init(() => {
     },
   }
 }, [], LCE_CONTAINER, {
+  supportVariableGlobally: true,
   presetConfig
 });
 
