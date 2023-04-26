@@ -213,7 +213,7 @@ init(() => {
       }
     },
   }
-}, [], LCE_CONTAINER, {
+}, customPlugins || [], LCE_CONTAINER, {
   supportVariableGlobally: true,
   presetConfig
 });
