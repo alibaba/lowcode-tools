@@ -750,6 +750,7 @@ async function bundleEditorView(
     type = 'component',
     setterName,
     presetConfig = {},
+    customPlugins = [],
   } = pluginOptions || {};
   const metaExportName = `${PARSED_NPM_NAME.uniqueName}Meta`;
   const advancedRenderUrls = {};
@@ -802,6 +803,7 @@ async function bundleEditorView(
     setterName: setterName || '',
     type,
     presetConfig: JSON.stringify(presetConfig),
+    customPlugins: JSON.stringify(customPlugins),
   };
   const indexJs = generateEntry({
     template: 'index.jsx',
