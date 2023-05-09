@@ -12,12 +12,5 @@ import './universal/global.scss';
   init(document.getElementById('lce-container'), {
     enableCondition: true,
     enableCanvasLock: true,
-    disableDefaultSettingPanel: false,
-    disableDefaultSetters: false,
-    stayOnTheSameSettingTab: false,
-    simulatorUrl: [
-      'https://cdn.jsdelivr.net/npm/@alilc/lowcode-react-simulator-renderer@^1.0.0/dist/js/react-simulator-renderer.js',
-      'https://cdn.jsdelivr.net/npm/@alilc/lowcode-react-simulator-renderer@^1.0.0/dist/css/react-simulator-renderer.css'
-    ],
   });
 })()
