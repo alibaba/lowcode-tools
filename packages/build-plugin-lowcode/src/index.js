@@ -64,7 +64,7 @@ const defaultScssEntryPaths = [
 
 function getEntry(rootDir, entryPath) {
   if (entryPath && fse.existsSync(path.resolve(rootDir, entryPath))) {
-    return path.resolve(rootDir, entryPath);
+    return path.resolve(rootDir, entryPath).replace(/\\/g, '\\\\');
   }
   for (let i = 0; i < defaultEntryPaths.length; i++) {
     const p = path.resolve(rootDir, defaultEntryPaths[i]);
@@ -957,7 +957,8 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
       return `const ${component} = getRealComponent(${component}Data, '${component}');\nexport { ${component} };`;
     })
     .join('\n');
-  componentViewsExportStr += `\nexport { default } from '${getEntry(rootDir, entryPath)}';`;
+  const exportPath = `\nexport { default } from '${getEntry(rootDir, entryPath)}';`;
+  componentViewsExportStr += exportPath.includes('\\\\') ? exportPath : exportPath.replace(/\\/g, '\\\\');
   componentViewsImportStr = _componentViews
     .map((component) => {
       const componentNameFolder = camel2KebabComponentName(component);
