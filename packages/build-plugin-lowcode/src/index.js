@@ -962,7 +962,7 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
   componentViewsImportStr = _componentViews
     .map((component) => {
       const componentNameFolder = camel2KebabComponentName(component);
-      const viewJsPath = path.resolve(
+      const viewJsPath = getEntry(
         rootDir,
         `src/${platform}/components/${componentNameFolder}/view`,
       );
