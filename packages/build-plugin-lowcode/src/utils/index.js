@@ -2,7 +2,8 @@ const _ = require('lodash');
 const path = require('path');
 const fse = require('fs-extra');
 const hbs = require('handlebars');
-const parseProps = require('./parse-props.ts');
+const glob = require('glob');
+const parseProps = require('./parse-props');
 
 /**
  * @description generate js file as webpack entry
@@ -12,12 +13,12 @@ const parseProps = require('./parse-props.ts');
  * @param {Object} params params for compile template content
  * @returns {String} path of entry file
  */
-function generateEntry({ template, filename = 'index.js', rootDir = process.cwd(), params }) {
+function generateEntry({ template, filename = 'index.js', rootDir = process.cwd(), params, tmpDirName = '.tmp' }) {
   const hbsTemplatePath = path.join(__dirname, `../templates/${template}`);
   const hbsTemplateContent = fse.readFileSync(hbsTemplatePath, 'utf-8');
   const compileTemplateContent = hbs.compile(hbsTemplateContent);
 
-  const tempDir = path.join(rootDir, '.tmp');
+  const tempDir = path.join(rootDir, tmpDirName);
   const jsPath = path.join(tempDir, filename);
 
   const jsTemplateContent = compileTemplateContent(params);
@@ -219,6 +220,25 @@ function asyncDebounce(func, wait) {
   return returnFunc;
 }
 
+function getUsedComponentMetas(rootDir, lowcodeDir = 'lowcode', metaFilename, components) {
+  let metaPaths = glob.sync(
+    path.resolve(rootDir, `${lowcodeDir}/**/${metaFilename}.@(js|ts|jsx|tsx)`),
+  );
+  if (metaPaths && metaPaths.length) {
+    metaPaths = metaPaths.map((item) => {
+      return item.slice(
+        path.resolve(rootDir, lowcodeDir).length + 1,
+        item.lastIndexOf(metaFilename) - 1,
+      );
+    });
+  }
+  return components
+    ? components.filter((component) => {
+        return metaPaths.includes(camel2KebabComponentName(component));
+      })
+    : metaPaths.map((dir) => kebab2CamelComponentName(dir));
+}
+
 module.exports = {
   toJson,
   parseProps,
@@ -228,4 +248,5 @@ module.exports = {
   generateComponentList,
   camel2KebabComponentName,
   kebab2CamelComponentName,
+  getUsedComponentMetas,
 };

@@ -7,6 +7,9 @@ const mergeWith = require('lodash/mergeWith');
 const parser = require('@alilc/lowcode-material-parser');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { getWebpackConfig } = require('build-scripts-config');
+const babelCompile = require('./compile/babel');
+const metaCompile = require('./compile/meta');
+const getDemoDir = require('./utils/getDemoDir');
 const isWsl = require('is-wsl');
 
 let INIT_STATE = false;
@@ -15,7 +18,7 @@ const { debug } = console;
 
 const UTILS = require('./utils');
 const CONSTANTS = require('./constants');
-const { installModule } = require('./utils/npm.ts');
+const { installModule } = require('./utils/npm');
 const userWebpackConfig = require('./config/user-config');
 
 const {
@@ -25,6 +28,7 @@ const {
   asyncDebounce,
   camel2KebabComponentName,
   kebab2CamelComponentName,
+  getUsedComponentMetas,
 } = UTILS;
 
 const {
@@ -144,25 +148,6 @@ function getUsedComponentViews(rootDir, targetDir = 'lowcode', components) {
     : viewPaths.map((dir) => kebab2CamelComponentName(dir));
 }
 
-function getUsedComponentMetas(rootDir, lowcodeDir = 'lowcode', metaFilename, components) {
-  let metaPaths = glob.sync(
-    path.resolve(rootDir, `${lowcodeDir}/**/${metaFilename}.@(js|ts|jsx|tsx)`),
-  );
-  if (metaPaths && metaPaths.length) {
-    metaPaths = metaPaths.map((item) => {
-      return item.slice(
-        path.resolve(rootDir, lowcodeDir).length + 1,
-        item.lastIndexOf(metaFilename) - 1,
-      );
-    });
-  }
-  return components
-    ? components.filter((component) => {
-        return metaPaths.includes(camel2KebabComponentName(component));
-      })
-    : metaPaths.map((dir) => kebab2CamelComponentName(dir));
-}
-
 /**
  * 将 css 打包到 js 文件中
  * @param {object} config webpack chain 配置
@@ -258,8 +243,8 @@ function confirmRenderPlatforms(rootDir, platforms) {
 
 async function build(options, pluginOptions, execCompile) {
   const webPackConfig = getWebpackConfig('production');
-  const { context } = options;
-  const { rootDir, pkg: package, userConfig = {} } = context;
+  const { context, onHook } = options;
+  const { rootDir, pkg: package, userConfig = {}, commandArgs } = context;
   const { alias = {} } = userConfig;
   const {
     components,
@@ -286,6 +271,21 @@ async function build(options, pluginOptions, execCompile) {
       lowcodeDir,
       entryPath,
     ));
+  if (execCompile) {
+    onHook('before.build.load', async () => {
+      await babelCompile({
+        source: lowcodeDir,
+        rootDir,
+        userOptions: userConfig,
+      })
+      await metaCompile({
+        rootDir,
+        userOptions: userConfig,
+        lowcodeDir,
+        package,
+      });
+    })
+  }
   const confirmedMetaTypes = confirmMetaTypes(rootDir, lowcodeDir, metaTypes);
   const metaPaths = await Promise.all(
     confirmedMetaTypes.map((item) => {
@@ -1184,7 +1184,7 @@ async function bundleAssets(options, pluginOptions, metaTypes, renderTypes, exec
       }
       fse.outputFileSync(targetPath, JSON.stringify(require(originPath), null, 2));
     });
-    updatePackage(rootDir, baseUrl, lowcodeDir, buildTarget, engineScope);
+    updatePackage(rootDir, baseUrl, lowcodeDir, buildTarget, engineScope, package);
   });
   return assetsPaths;
 }
@@ -1195,8 +1195,9 @@ function updatePackage(
   lowcodeDir = 'lowcode',
   buildTarget = 'build',
   engineScope = '@ali',
+  package,
 ) {
-  const packageData = require(path.resolve(rootDir, 'package.json'));
+  const packageData = package;
   let { componentConfig } = packageData;
   if (!componentConfig) {
     componentConfig = {};
@@ -1209,6 +1210,20 @@ function updatePackage(
     isBetaVersion ? 'daily' : 'prod'
   }.json`;
   packageData.componentConfig = componentConfig;
+  packageData.lcMeta = {
+    ...packageData.lcMeta,
+    type: 'component',
+  };
+  if (!package.dependencies['@babel/runtime']) {
+    package.dependencies['@babel/runtime'] = '^7.0.0';
+  }
+  packageData.exports = {
+    '.': {
+      import: packageData.module || 'es/index.js',
+      require: packageData.main || 'lib/index.js',
+    },
+    ...packageData.exports,
+  }
   fse.outputFileSync(path.resolve(rootDir, 'package.json'), JSON.stringify(packageData, null, 2));
 }
 
@@ -1286,7 +1301,7 @@ async function bundleComponentMeta(webPackConfig, options, pluginOptions, execCo
         `${buildTarget}/${lowcodeDir}/${componentJsPath}.js`,
       );
 
-      // 把meta.js里面的window替换成this
+      // 把 meta.js 里面的 window 替换成 this
       const jsContent = fse.readFileSync(originPath, 'utf-8');
       const jsContentTarget = jsContent.replace('window', 'this');
       fse.outputFileSync(originPath, jsContentTarget);
@@ -1303,48 +1318,3 @@ async function bundleComponentMeta(webPackConfig, options, pluginOptions, execCo
 
   return componentsMetaPath;
 }
-
-// function transferMeta2Json(rootDir) {
-//   require('jsdom-global')();
-//   // globalThis = global;
-//   const jsdom = require('jsdom');
-//   const { JSDOM } = jsdom;
-//   const DOM = new JSDOM(
-//     `
-// <!DOCTYPE html>
-// <html lang="en">
-
-// <head>
-// <meta charset="UTF-8">
-// <meta name="viewport" content="width=device-width, initial-scale=1.0">
-// <meta http-equiv="X-UA-Compatible" content="ie=edge">
-// <title>DEMO 预览</title>
-// </head>
-
-// <body>
-// <div id="lce-container"></div>
-// </body>
-// </html>
-//   `,
-//     {
-//       runScripts: 'dangerously',
-//       resources: 'usable',
-//       storageQuota: 10000000,
-//       url: 'https://example.org?appCode=test',
-//     },
-//   );
-//   const { window } = DOM;
-//   window.onload = () => {
-//     debug('ready to roll!');
-//     try {
-//       const p = require(path.resolve(rootDir, 'build/lowcode/meta.js'));
-//       fse.outputFileSync(
-//         path.resolve(rootDir, 'build/lowcode/meta.json'),
-//         toJson(p.default.assetsProd),
-//       );
-//     } catch (e) {
-//       debug('error: ', e);
-//     }
-//     process.exit(0);
-//   };
-// }
