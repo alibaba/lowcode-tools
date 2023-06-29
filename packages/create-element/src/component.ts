@@ -38,12 +38,6 @@ export default async (answers) => {
     }, {
       name: 'react-组件库',
       value: 'react-multiple',
-    }, {
-      name: 'rax-单组件',
-      value: 'rax-single',
-    }, {
-      name: 'rax-组件库',
-      value: 'rax-multiple',
     }],
     default: 'react-single',
   }];
