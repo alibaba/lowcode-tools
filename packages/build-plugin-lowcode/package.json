@@ -9,7 +9,9 @@
   "scripts": {
     "component:dev": "cd demo/component && npm start",
     "setter:dev": "cd demo/setter && npm start",
-    "antdSetterMap:dev": "cd demo/antd-setter-map && npm start"
+    "antdSetterMap:dev": "cd demo/antd-setter-map && npm start",
+    "pub": "npm publish",
+    "beta": "npm publish --tag=beta"
   },
   "repository": {
     "type": "git",
