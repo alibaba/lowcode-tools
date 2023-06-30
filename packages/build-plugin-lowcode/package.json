@@ -1,6 +1,6 @@
 {
   "name": "@alifd/build-plugin-lowcode",
-  "version": "0.3.18",
+  "version": "0.3.19-beta.0",
   "description": "build plugin for component-to-lowcode",
   "main": "src/index.js",
   "keywords": [
@@ -9,7 +9,9 @@
   "scripts": {
     "component:dev": "cd demo/component && npm start",
     "setter:dev": "cd demo/setter && npm start",
-    "antdSetterMap:dev": "cd demo/antd-setter-map && npm start"
+    "antdSetterMap:dev": "cd demo/antd-setter-map && npm start",
+    "pub": "npm publish",
+    "beta": "npm publish --tag=beta"
   },
   "repository": {
     "type": "git",
