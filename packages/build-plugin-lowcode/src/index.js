@@ -600,14 +600,14 @@ async function initLowCodeSchema(
           `${lowcodeDir}/${componentNameFolder}/meta${metaDevSubfix}.${metaFormat || 'ts'}`,
         ),
         `
-import { ComponentMetadata, Snippet } from '@alilc/lowcode-types';
+import { IPublicTypeComponentMetadata, IPublicTypeSnippet } from '@alilc/lowcode-types';
 
-const ${item.componentName}Meta: ComponentMetadata = ${JSON.stringify(
+const ${item.componentName}Meta: IPublicTypeComponentMetadata = ${JSON.stringify(
           componentDescription,
           null,
           2,
         )};
-const snippets: Snippet[] = ${JSON.stringify(snippets, null, 2)};
+const snippets: IPublicTypeSnippet[] = ${JSON.stringify(snippets, null, 2)};
 
 export default {
   ...${item.componentName}Meta,
