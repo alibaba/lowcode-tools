@@ -828,7 +828,8 @@ async function bundleEditorView(
     componentViews = `{
       ...SingleComponentData
     }`;
-    componentViewsExportStr = `export { default } from '${lowcodeViewPath}';export * from '${lowcodeViewPath}';`;
+    // default 不一定存在，export { default } 不安全可能会报错
+    componentViewsExportStr = `\nconst entryDefault = componentInstances.default;\nexport { entryDefault as default }';export * from '${lowcodeViewPath}';`;
   } else {
     const _componentViews = getUsedComponentViews(rootDir, lowcodeDir, components) || [];
     componentViews = `{${_componentViews
@@ -841,7 +842,8 @@ async function bundleEditorView(
         return `const ${component} = getRealComponent(${component}Data, '${component}');\nexport { ${component} };`;
       })
       .join('\n');
-    componentViewsExportStr += `\nexport { default } from '${getEntry(rootDir, entryPath)}';`;
+    // default 不一定存在，export { default } 不安全可能会报错
+    componentViewsExportStr += `\nconst entryDefault = componentInstances.default;\nexport { entryDefault as default }`;
     componentViewsImportStr = _componentViews
       .map((component) => {
         const componentNameFolder = camel2KebabComponentName(component);
@@ -1217,12 +1219,13 @@ function updatePackage(
   if (!package.dependencies['@babel/runtime']) {
     package.dependencies['@babel/runtime'] = '^7.0.0';
   }
-  packageData.exports = {
-    '.': {
-      import: packageData.module || 'es/index.js',
-      require: packageData.main || 'lib/index.js',
-    },
-    ...packageData.exports,
+  const processMainFieldForExports = (entry) => {
+    if (!entry) return entry;
+    return `${entry.startsWith('./') ? '' : './'}${entry}${entry.endsWith('.js') ? '' : '.js'}`
+  }
+  packageData.exports['.'] = {
+    import: processMainFieldForExports(packageData.module) || './es/index.js',
+    require: processMainFieldForExports(packageData.main) || './lib/index.js',
   }
   fse.outputFileSync(path.resolve(rootDir, 'package.json'), JSON.stringify(packageData, null, 2));
 }

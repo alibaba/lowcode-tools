@@ -37,6 +37,7 @@ module.exports = async ({
   const exportsData = {
     "./prototype": {},
     "./prototypeView": {},
+    "./*": './*',
   };
   const targetExportsMap = {
     'lib': 'require',
@@ -69,7 +70,7 @@ module.exports = async ({
         package.files.push(`${targetPath}/`);
       }
       const entryName = getAvailableFileName({ fileName, lowcodeDir, rootDir });
-      exportsData[fileNameEntryMap[fileName]][targetExportsMap[target]] = `${targetPath}/${entryName}`;
+      exportsData[fileNameEntryMap[fileName]][targetExportsMap[target]] = `./${targetPath}/${entryName}.js`;
       const distFilePath = path.join(rootDir, targetPath, `${entryName}.js`);
       const { code } = babel.transformSync(fileContent, {
         filename: distFilePath,
@@ -80,7 +81,7 @@ module.exports = async ({
     });
   });
   package.exports = {
-    ...exportsData,
     ...package.exports,
+    ...exportsData,
   };
 };
