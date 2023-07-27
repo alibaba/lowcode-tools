@@ -48,12 +48,11 @@ const debounceStart = asyncDebounce(start, 300);
 
 const defaultEntryPaths = [
   `./src/index.tsx`,
-  `./index.js`,
-  `./lib/index.js`,
   `./src/index.ts`,
   `./src/index.js`,
   `./src/index.jsx`,
-  `./src/index.tsx`,
+  `./index.js`,
+  `./lib/index.js`,
   `./components/index.ts`,
   `./components/index.tsx`,
 ];
