@@ -829,7 +829,7 @@ async function bundleEditorView(
       ...SingleComponentData
     }`;
     // default 不一定存在，export { default } 不安全可能会报错
-    componentViewsExportStr = `\nconst entryDefault = componentInstances.default;\nexport { entryDefault as default }';export * from '${lowcodeViewPath}';`;
+    componentViewsExportStr = `\nconst entryDefault = componentInstances.default;\nexport { entryDefault as default };export * from '${lowcodeViewPath}';`;
   } else {
     const _componentViews = getUsedComponentViews(rootDir, lowcodeDir, components) || [];
     componentViews = `{${_componentViews
