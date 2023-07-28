@@ -17,6 +17,22 @@ export interface SetterMap {
   [SetterName: string]: string;
 }
 
+export type Assets = {
+  package: string;
+  version: string;
+  urls: string[];
+  library: string;
+};
+// 示例
+// {
+//   package: 'antd',
+//   version: '4.17.3',
+//   urls: [
+//     'https://g.alicdn.com/code/lib/antd/4.17.3/antd.min.js',
+//     'https://g.alicdn.com/code/lib/antd/4.17.3/antd.min.css',
+//   ],
+//   library: 'antd',
+// }
 ```
 ## 开发调试
 ### 组件开发
