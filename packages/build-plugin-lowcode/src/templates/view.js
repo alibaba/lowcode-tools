@@ -1,12 +1,12 @@
-{{{ componentViewsImportStr }}}
-
 import * as componentInstances from '{{{entryPath}}}';
+
+{{{ componentViewsImportStr }}}
 
 {{{scssImport}}}
 
 {{{ componentViewsExportStr }}}
+
 export * from '{{{entryPath}}}';
-{{{ componentViewsExportStr }}}
 
 const coveredComponents = {{{componentViews}}};
 
