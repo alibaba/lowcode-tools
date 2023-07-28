@@ -77,15 +77,17 @@ const getBabelConfig = ({
   if (alias) {
     const aliasRelative = {};
     Object.keys(alias).forEach((aliasKey) => {
-      aliasRelative[aliasKey] = alias[aliasKey].startsWith("./")
-        ? alias[aliasKey]
-        : `./${alias[aliasKey]}`;
+      let aliasValue = alias[aliasKey];
+      aliasValue = aliasValue.replace('src', target);
+      aliasRelative[aliasKey] = aliasValue.startsWith("./")
+        ? aliasValue
+        : `./${aliasValue}`;
     });
     babelConfig.plugins = babelConfig.plugins.concat([
       [
         require.resolve("babel-plugin-module-resolver"),
         {
-          root: [root],
+          root: [root, target],
           alias: aliasRelative,
         },
       ],

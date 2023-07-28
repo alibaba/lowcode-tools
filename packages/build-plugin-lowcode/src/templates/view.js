@@ -4,8 +4,8 @@ import * as componentInstances from '{{{entryPath}}}';
 
 {{{scssImport}}}
 
-{{{ componentViewsExportStr }}}
 export * from '{{{entryPath}}}';
+{{{ componentViewsExportStr }}}
 
 const coveredComponents = {{{componentViews}}};
 
