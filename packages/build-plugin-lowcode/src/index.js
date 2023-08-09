@@ -848,7 +848,12 @@ async function bundleEditorView(
       .map((component) => {
         const componentNameFolder = camel2KebabComponentName(component);
         const viewJsPath = path.resolve(rootDir, `${lowcodeDir}/${componentNameFolder}/view`);
-        return `import * as ${component}Data from '${viewJsPath}'`;
+        //兼容window路径
+        if(/^[a-zA-Z]:/.test(viewJsPath)){
+          const windowViewJsPath = viewJsPath.replace(/\\/g, '\\\\');
+          return `import * as ${component}Data from '${windowViewJsPath}';`;
+        }
+        return `import * as ${component}Data from '${viewJsPath}';`;
       })
       .join('\n');
   }
