@@ -4,6 +4,13 @@
   "description": "<%= description %>",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "exports": {
+    "./*": "./*",
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    }
+  },
   "typings": "types/index.d.ts",
   "files": [
     "build/",
@@ -78,5 +85,8 @@
   },
   "componentConfig": {
     "isComponentLibrary": true
+  },
+  "lcMeta": {
+    "type": "component"
   }
 }
