@@ -14,6 +14,13 @@
   ],
   "main": "lib/index.js",
   "module": "es/index.js",
+  "exports": {
+    "./*": "./*",
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    }
+  },
   "stylePath": "style.js",
   "scripts": {
     "start": "build-scripts start",
@@ -60,6 +67,9 @@
     "name": "ExampleComponent",
     "title": "demo component",
     "category": "Information"
+  },
+  "lcMeta": {
+    "type": "component"
   },
   "license": "MIT"
 }
