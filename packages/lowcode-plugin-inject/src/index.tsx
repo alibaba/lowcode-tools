@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { plugins, setters } from '@alilc/lowcode-engine';
-import { IPublicModelPluginContext, IPublicTypePlugin } from '@alilc/lowcode-types';
+import { IPublicModelPluginContext, IPublicEnumPluginRegisterLevel, IPublicTypePlugin } from '@alilc/lowcode-types';
 import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages, setInjectServerHost } from './utils';
 import { Notification } from '@alifd/next';
-
+import { AppInject } from './appInject';
 
 let injectedPluginConfigMap = null;
 let injectedPlugins = [];
@@ -32,29 +32,39 @@ interface IOptions {
 }
 
 const Inject = (ctx: IPublicModelPluginContext, options: IOptions = {}) => {
+  if (!needInject) {
+    return {
+      init() {}
+    }
+  }
+
+  if (ctx.registerLevel === IPublicEnumPluginRegisterLevel.Workspace) {
+    return AppInject(ctx, options);
+  }
+
   if (options?.injectServerHost) {
     setInjectServerHost(options.injectServerHost);
   }
+
   // inject 已有的设计器插件
-  if (needInject) {
-    // 覆盖后续的插件注册逻辑，所有只有本插件后面注册的插件才可以支持 inject 逻辑
-    const originalRegister = plugins.register;
-    plugins.register = async function (plugin: IPublicTypePlugin, pluginOptions: any, options: any) {
-      let pluginName = plugin.pluginName;
-      if (!pluginName) {
-        const pluginConfig = plugin(ctx, pluginOptions);
-        // 兼容逻辑
-        pluginName = (pluginConfig as any).name;
-      }
-      const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx);
-      if (injectedSameNamePlugin) {
-        injectedPluginConfigMap[pluginName] = null;
-        return originalRegister.call(this, injectedSameNamePlugin, pluginOptions, options);
-      } else {
-        return originalRegister.call(this, plugin, pluginOptions, options);
-      }
+  // 覆盖后续的插件注册逻辑，所有只有本插件后面注册的插件才可以支持 inject 逻辑
+  const originalRegister = plugins.register;
+  plugins.register = async function (plugin: IPublicTypePlugin, pluginOptions: any, options: any) {
+    let pluginName = plugin.pluginName;
+    if (!pluginName) {
+      const pluginConfig = plugin(ctx, pluginOptions);
+      // 兼容逻辑
+      pluginName = (pluginConfig as any).name;
+    }
+    const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx);
+    if (injectedSameNamePlugin) {
+      injectedPluginConfigMap[pluginName] = null;
+      return originalRegister.call(this, injectedSameNamePlugin, pluginOptions, options);
+    } else {
+      return originalRegister.call(this, plugin, pluginOptions, options);
     }
   }
+
   return {
     // 插件名，注册环境下唯一
     name: 'LowcodePluginInjectAlt',
@@ -62,9 +72,6 @@ const Inject = (ctx: IPublicModelPluginContext, options: IOptions = {}) => {
     dep: [],
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     async init() {
-      if (!needInject) {
-        return;
-      }
 
       // inject 新的设计器插件
       if (injectedPluginConfigMap) {

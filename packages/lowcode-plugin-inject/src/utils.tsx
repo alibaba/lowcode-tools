@@ -272,7 +272,7 @@ export async function injectAssets(assets) {
         )
       })
     }
-  } catch (err) { }
+  } catch (err) {}
   return assets;
 }
 
