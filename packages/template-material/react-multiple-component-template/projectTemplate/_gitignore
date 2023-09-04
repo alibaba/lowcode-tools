@@ -73,6 +73,8 @@ __html/
 umd/
 es/
 lib/
+lowcode_es/
+lowcode_lib/
 types/
 demos/
 !scripts/demos/
