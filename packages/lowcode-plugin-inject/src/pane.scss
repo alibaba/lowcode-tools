@@ -1,0 +1,48 @@
+.inject-pane-icon {
+  height: 60px !important;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.inject-setting-panel {
+  padding: 10px 20px;
+
+  &-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  &-label {
+    width: 100px;
+    text-align: right;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    display: inline-block;
+  }
+
+  &-inject-item {
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  &-table {
+    margin-bottom: 10px;
+  }
+
+  &-empty {
+    padding: 20px;
+
+    &-title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    &-tips {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+}

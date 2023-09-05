@@ -26,8 +26,8 @@ function makeJsonpStr(cbName, data) {
   return `;${cbName}(${JSON.stringify(data)})`
 }
 
-async function portIsOccupied(_port) {
-  const server = net.createServer().listen(_port);
+async function portIsOccupied(_port, _host) {
+  const server = net.createServer().listen(_port, _host);
   // eslint-disable-next-line no-shadow
   return new Promise((resolve) => {
     server.on('listening', () => {
@@ -47,9 +47,9 @@ const HOST = '0.0.0.0';
 
 const init = async () => {
 
-  if (await portIsOccupied(PORT)) {
+  if (await portIsOccupied(PORT, HOST)) {
     const timer = setInterval(async () => {
-      const isOccupied = await portIsOccupied(PORT);
+      const isOccupied = await portIsOccupied(PORT, HOST);
       if (!isOccupied) {
         logger.info('Original inject server is down, start another')
         clearInterval(timer);
