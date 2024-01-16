@@ -55,6 +55,7 @@ module.exports = function dtsCompiler(compileInfo, {
         log.error(message);
       }
     });
+    throw new Error('Compile declaration failed.');
   }
 
   needCompileList.forEach(({ targetPath, fileNamesDTS }) => {
