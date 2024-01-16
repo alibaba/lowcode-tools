@@ -1,6 +1,6 @@
 {
   "name": "@alilc/build-plugin-lce",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "build plugin for LowCodeEngine",
   "main": "src/index.js",
   "scripts": {
@@ -75,5 +75,6 @@
   },
   "devDependencies": {
     "@types/node": "^12.12.18"
-  }
+  },
+  "repository": "https://github.com/alibaba/lowcode-tools.git"
 }
