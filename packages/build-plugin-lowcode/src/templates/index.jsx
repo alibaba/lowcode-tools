@@ -23,6 +23,14 @@ const basePackages = [
     library: 'moment',
   },
   {
+    package: 'dayjs',
+    urls: [
+      'https://jsd.onmicrosoft.cn/npm/dayjs@1.9.8/dayjs.min.js'
+    ],
+    library: 'dayjs',
+    version: '1.9.8'
+  },
+  {
     package: "lodash",
     library: "_",
     urls: [
