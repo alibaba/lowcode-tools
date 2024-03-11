@@ -68,4 +68,8 @@ module.exports = [
       }
     },
   },
+  {
+    name: 'chainWebpack',
+    validation: 'object',
+  }
 ];

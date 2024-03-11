@@ -19,4 +19,7 @@ module.exports = {
       },
     ],
   ],
+  chainWebpack(config, taskName) {
+    
+  }
 };

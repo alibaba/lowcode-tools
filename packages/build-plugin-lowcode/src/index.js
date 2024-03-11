@@ -11,6 +11,7 @@ const babelCompile = require('./compile/babel');
 const metaCompile = require('./compile/meta');
 const getDemoDir = require('./utils/getDemoDir');
 const isWsl = require('is-wsl');
+const os = require('os');
 
 let INIT_STATE = false;
 let PARSED_NPM_NAME;
@@ -18,6 +19,7 @@ const { debug } = console;
 
 const UTILS = require('./utils');
 const CONSTANTS = require('./constants');
+const EXTERNALS = require('./externals');
 const { installModule } = require('./utils/npm');
 const userWebpackConfig = require('./config/user-config');
 
@@ -65,15 +67,21 @@ const defaultScssEntryPaths = [
   `./components/index.scss`,
 ];
 
+function normalizePathTextForWindows(pathText) {
+  if (os.platform() === 'win32' && pathText && !pathText.includes('\\\\')) {
+    return pathText.replace(/\\/g, '\\\\');
+  }
+  return pathText;
+}
+
 function getEntry(rootDir, entryPath) {
   if (entryPath && fse.existsSync(path.resolve(rootDir, entryPath))) {
-    return path.resolve(rootDir, entryPath).replace(/\\/g, '\\\\');
+    return path.resolve(rootDir, entryPath);
   }
   for (let i = 0; i < defaultEntryPaths.length; i++) {
     const p = path.resolve(rootDir, defaultEntryPaths[i]);
     if (fse.existsSync(p)) {
-      return p.replace(/\\/g, '\\\\');
-      // return p;
+      return p;
     }
   }
   return '';
@@ -83,8 +91,7 @@ function getScssEntry(rootDir) {
   for (let i = 0; i < defaultScssEntryPaths.length; i++) {
     const p = path.resolve(rootDir, defaultScssEntryPaths[i]);
     if (fse.existsSync(p)) {
-      return p.replace(/\\/g, '\\\\');
-      // return p;
+      return p;
     }
   }
   return '';
@@ -292,7 +299,7 @@ async function build(options, pluginOptions, execCompile) {
     }),
   );
   const metaPathMap = {};
-  metaPaths.forEach((item) => {    
+  metaPaths.forEach((item) => {
     metaPathMap[path.basename(item).replace(path.extname(item), '')] = item;
     // metaPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
   });
@@ -504,11 +511,17 @@ async function start(options, pluginOptions) {
         },
       });
     }
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     !disableStyleLoader && useStyleLoader(config);
     if (baseLibrary === 'rax') {
       config.module.rule('scss').use('rpx-loader').loader('rpx-loader').before('css-loader');
     }
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, 'lowcode-dev');
   });
 }
 
@@ -673,10 +686,9 @@ async function bundleMetaV2(options, pluginOptions, execCompile, metaType) {
         );
         usedComponents.push(component);
       }
-      metaJsPath = metaJsPath.replace(/\\/g, '\\\\')
       return `import ${
         component.includes('.') ? component.replace(/\./g, '') : component
-      }Meta from '${metaJsPath}'`;
+      }Meta from '${normalizePathTextForWindows(metaJsPath)}'`;
     })
     .join('\n');
   const metaPath = generateEntry({
@@ -707,8 +719,15 @@ async function bundleMetaV2(options, pluginOptions, execCompile, metaType) {
     });
     config.output.library(metaExportName).libraryTarget('umd');
     config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     useStyleLoader(config);
+
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, `lowcode-meta-${metaType}`);
   });
   return metaPath;
 }
@@ -823,12 +842,12 @@ async function bundleEditorView(
   let componentViewsImportStr;
   const lowcodeViewPath = path.resolve(rootDir, `${lowcodeDir}/view.tsx`);
   if (singleComponent && fse.existsSync(lowcodeViewPath)) {
-    componentViewsImportStr = `import * as SingleComponentData from '${lowcodeViewPath}'`;
+    componentViewsImportStr = `import * as SingleComponentData from '${normalizePathTextForWindows(lowcodeViewPath)}'`;
     componentViews = `{
       ...SingleComponentData
     }`;
     // default 不一定存在，export { default } 不安全可能会报错
-    componentViewsExportStr = `\nconst entryDefault = componentInstances.default;\nexport { entryDefault as default };\nexport * from '${lowcodeViewPath}';`;
+    componentViewsExportStr = `\nconst entryDefault = componentInstances.default;\nexport { entryDefault as default };\nexport * from '${normalizePathTextForWindows(lowcodeViewPath)}';`;
   } else {
     const _componentViews = getUsedComponentViews(rootDir, lowcodeDir, components) || [];
     componentViews = `{${_componentViews
@@ -847,7 +866,7 @@ async function bundleEditorView(
       .map((component) => {
         const componentNameFolder = camel2KebabComponentName(component);
         const viewJsPath = path.resolve(rootDir, `${lowcodeDir}/${componentNameFolder}/view`);
-        return `import * as ${component}Data from '${viewJsPath}'`;
+        return `import * as ${component}Data from '${normalizePathTextForWindows(viewJsPath)}'`;
       })
       .join('\n');
   }
@@ -857,8 +876,8 @@ async function bundleEditorView(
     filename: 'view.js',
     rootDir,
     params: {
-      entryPath: getEntry(rootDir, entryPath),
-      scssImport: scssEntry ? `import '${scssEntry}'` : '',
+      entryPath: normalizePathTextForWindows(getEntry(rootDir, entryPath)),
+      scssImport: scssEntry ? `import '${normalizePathTextForWindows(scssEntry)}'` : '',
       componentViews,
       componentViewsExportStr,
       componentViewsImportStr,
@@ -915,11 +934,17 @@ async function bundleEditorView(
     });
     config.output.library(library).libraryTarget('umd');
     config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     if (baseLibrary === 'rax') {
       const scssRule = config.module.rule('scss');
       scssRule.use('rpx-loader').loader('rpx-loader').before('css-loader');
     }
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, 'lowcode-editor-view');
   });
   return viewPath;
 }
@@ -958,8 +983,7 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
       return `const ${component} = getRealComponent(${component}Data, '${component}');\nexport { ${component} };`;
     })
     .join('\n');
-  const exportPath = `\nexport { default } from '${getEntry(rootDir, entryPath)}';`;
-  componentViewsExportStr += exportPath.includes('\\\\') ? exportPath : exportPath.replace(/\\/g, '\\\\');
+  const exportPath = `\nexport { default } from '${normalizePathTextForWindows(getEntry(rootDir, entryPath))}';`;
   componentViewsImportStr = _componentViews
     .map((component) => {
       const componentNameFolder = camel2KebabComponentName(component);
@@ -967,7 +991,7 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
         rootDir,
         `src/${platform}/components/${componentNameFolder}/view`,
       );
-      return `import * as ${component}Data from '${viewJsPath}'`;
+      return `import * as ${component}Data from '${normalizePathTextForWindows(viewJsPath)}'`;
     })
     .join('\n');
   const scssEntry = getScssEntry(rootDir);
@@ -976,8 +1000,8 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
     filename: `${platform}.view.js`,
     rootDir,
     params: {
-      entryPath: getEntry(rootDir, entryPath),
-      scssImport: scssEntry ? `import '${scssEntry}'` : '',
+      entryPath: normalizePathTextForWindows(getEntry(rootDir, entryPath)),
+      scssImport: scssEntry ? `import '${normalizePathTextForWindows(scssEntry)}'` : '',
       componentViews,
       componentViewsExportStr,
       componentViewsImportStr,
@@ -997,11 +1021,17 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
     });
     config.output.library(library).libraryTarget('umd');
     config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}/render/${platform}`));
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     if (baseLibrary === 'rax') {
       const scssRule = config.module.rule('scss');
       scssRule.use('rpx-loader').loader('rpx-loader').before('css-loader');
     }
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, `render-view-${platform}`);
   });
   return viewPath;
 }
@@ -1254,7 +1284,7 @@ async function bundleComponentMeta(webPackConfig, options, pluginOptions, execCo
     const componentJsPath = `${lowcodeDir}/${componentNameFolder}/${metaFilename}`;
     const metaJsPath = path.resolve(rootDir, componentJsPath);
     const componentMetaName = `${component}Meta`;
-    const componentImportStr = `import ${componentMetaName} from '${metaJsPath}';`;
+    const componentImportStr = `import ${componentMetaName} from '${normalizePathTextForWindows(metaJsPath)}';`;
     const componentMetaPath = generateEntry({
       template: 'component-meta.js',
       filename: `${componentJsPath}.js`,
@@ -1288,8 +1318,15 @@ async function bundleComponentMeta(webPackConfig, options, pluginOptions, execCo
         });
         config.output.library(componentMetaExportName).libraryTarget('umd');
         config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
-        config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+        let ext = externals || [];
+        if(!Array.isArray(ext)) {
+          ext = [ externals ];
+        }
+        config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
         useStyleLoader(config);
+
+        const chain = options.context.userConfig.chainWebpack;
+        if(chain) chain(config, taskName);
       });
     })(component, idx);
   });
