@@ -56,7 +56,11 @@
     "build-plugin-component": "^1.0.0",
     "template-component-demo": "^2.0.3",
     "build-plugin-moment-locales": "^0.1.0",
-    "f2elint": "^1.2.0"
+    "f2elint": "^1.2.0",
+    "@alilc/lowcode-react-renderer": "^1.0.1",
+    "@alilc/lowcode-utils": "^1.0.1",
+    "style-loader": "^2.0.0",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "moment": "latest",

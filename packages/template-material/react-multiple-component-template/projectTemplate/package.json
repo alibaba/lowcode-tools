@@ -68,7 +68,11 @@
     "@umijs/plugin-sass": "^1.1.1",
     "dumi": "^1.1.49",
     "dumi-theme-default": "^1.1.24",
-    "f2elint": "^1.2.0"
+    "f2elint": "^1.2.0",
+    "@alilc/lowcode-react-renderer": "^1.0.1",
+    "@alilc/lowcode-utils": "^1.0.1",
+    "style-loader": "^2.0.0",
+    "lodash": "^4.17.21"
   },
   "dependencies": {
     "moment": "^2.29.4",
