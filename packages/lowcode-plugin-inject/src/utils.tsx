@@ -48,9 +48,16 @@ export function setInjectServerHost(finalInjectServerHost) {
   console.log('inject server host', injectServerHost);
 }
 
+export interface InjectOptions {
+  filter?: (url: string) => boolean;
+}
+
 // 获取 inject 资源的 url，格式：['url1', 'url2']
-function getInjectUrls(resourceType, type = 'url'): Promise<any> {
+function getInjectUrls(resourceType, type = 'url', injectOptions?: InjectOptions): Promise<any> {
   const filter = (_urls) => {
+    if (injectOptions?.filter) {
+      _urls = _urls.filter(url => injectOptions.filter(url));
+    }
     if (!resourceType) {
       return type === 'url' ? _urls.map(item => item.url || item) : _urls;
     }
@@ -131,8 +138,8 @@ function loadComponentFromSources(sources) {
 }
 
 // 获取 inject 的资源，格式 [{name, module, pluginType}]
-export async function getInjectedResource(type) {
-  const urls = await getInjectUrls(type);
+export async function getInjectedResource(type, injectOptions?: InjectOptions) {
+  const urls = await getInjectUrls(type, undefined, injectOptions);
   await loadComponentFromSources(urls);
   return window[arrayFlag].filter((item) => {
     const _item = item.default || item;
@@ -238,10 +245,10 @@ function getComponentFromUrlItems(items) {
 }
 
 
-export async function injectAssets(assets) {
+export async function injectAssets(assets, injectOptions?: InjectOptions) {
   if (!needInject) return assets;
   try {
-    const injectUrls = await getInjectUrls('component', 'item');
+    const injectUrls = await getInjectUrls('component', 'item', injectOptions);
     const components = getComponentFromUrlItems(injectUrls)
     Object.keys(components).forEach((name) => {
       const item = components[name];
@@ -276,9 +283,9 @@ export async function injectAssets(assets) {
   return assets;
 }
 
-export async function injectComponents(components) {
+export async function injectComponents(components, injectOptions?: InjectOptions) {
   if (!needInject) return components;
-  const injectUrls = await getInjectUrls('component', 'item');
+  const injectUrls = await getInjectUrls('component', 'item', injectOptions);
   await loadComponentFromSources(injectUrls.map(item => item.url || item));
   const injectedComponents = getComponentFromUrlItems(injectUrls);
   const libraryMap = {};
@@ -307,9 +314,9 @@ export async function injectComponents(components) {
   return { ...components, ...injectedComponentsForRenderer };
 }
 
-export async function filterPackages(packages = []) {
+export async function filterPackages(packages = [], injectOptions?: InjectOptions) {
   if (!needInject) return packages;
-  const injectUrls = await getInjectUrls('component', 'item');
+  const injectUrls = await getInjectUrls('component', 'item', injectOptions);
   const injectedComponents = getComponentFromUrlItems(injectUrls);
   return packages.filter((item) => {
     return !(item.package in injectedComponents)

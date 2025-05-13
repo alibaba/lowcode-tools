@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-plugin-inject",
   "author": "ens",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "lowcode-plugin-inject",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -36,12 +36,15 @@
     "react": "^16.0.0"
   },
   "devDependencies": {
-    "@alilc/build-plugin-alt": "^1.0.0",
     "@alib/build-scripts": "^0.1.32",
     "@alifd/theme-lowcode-light": "^0.2.1",
+    "@alilc/build-plugin-alt": "^1.0.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@recore/config": "^2.0.6",
     "@types/react": "^16.0.3",
-    "build-plugin-fusion": "^0.1.19"
+    "build-plugin-fusion": "^0.1.19",
+    "react": "^16",
+    "react-dom": "^16"
   },
   "license": "MIT"
 }

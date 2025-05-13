@@ -1,5 +1,5 @@
 import { IPublicModelPluginContext, IPublicEnumPluginRegisterLevel } from '@alilc/lowcode-types';
-import { getInjectedResource, injectAssets } from './utils';
+import { getInjectedResource, injectAssets, type InjectOptions } from './utils';
 import Icon from './icon';
 import { Pane } from './pane';
 import React from 'react';
@@ -10,10 +10,10 @@ const injectConfig = new InjectConfig();
 let injectedPluginConfigMap = null;
 let injectedPlugins = [];
 
-export async function getInjectedPlugin(name: string, ctx: IPublicModelPluginContext) {
+export async function getInjectedPlugin(name: string, ctx: IPublicModelPluginContext, injectOptions?: InjectOptions) {
   if (!injectedPluginConfigMap) {
     injectedPluginConfigMap = {};
-    injectedPlugins = await getInjectedResource('plugin');
+    injectedPlugins = await getInjectedResource('plugin', injectOptions);
     if (injectedPlugins && injectedPlugins.length > 0) {
       injectedPlugins.forEach((item: any) => {
         const config = item.module(ctx);
@@ -35,7 +35,7 @@ export function AppInject(ctx: IPublicModelPluginContext, options: any) {
       pluginName = pluginConfig.name;
     }
 
-    const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx);
+    const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx, options);
     const resourceName  = ctx.editorWindow?.resource?.name;
     const viewName = (ctx?.editorWindow?.currentEditorView as any)?.viewName;
     const isGlobal = ctx?.registerLevel === IPublicEnumPluginRegisterLevel.Workspace;
@@ -80,7 +80,7 @@ export function AppInject(ctx: IPublicModelPluginContext, options: any) {
       const subPluginName = '___injectPlugins___';
 
       const subPlugin =  (ctx: IPublicModelPluginContext) => {
-        injectAssets(ctx)
+        injectAssets(ctx, options)
         return {
           async init() {
           }
@@ -97,7 +97,7 @@ export function AppInject(ctx: IPublicModelPluginContext, options: any) {
 
       workspace.onChangeActiveWindow(async () => {
         for (const pluginName in injectedPluginConfigMap) {
-          const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx);
+          const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx, options);
           if (!injectedSameNamePlugin) {
             continue;
           }
@@ -123,7 +123,7 @@ export function AppInject(ctx: IPublicModelPluginContext, options: any) {
         }
       });
 
-      await getInjectedPlugin(undefined, ctx);
+      await getInjectedPlugin(undefined, ctx, options);
 
       ctx.skeleton.add({
         area: 'leftArea',
@@ -147,7 +147,7 @@ export function AppInject(ctx: IPublicModelPluginContext, options: any) {
           injectConfig,
           injectedPluginConfigMap,
           getInjectInfo: async () => {
-            const injectedSetters = await getInjectedResource('vs');
+            const injectedSetters = await getInjectedResource('vs', options);
             return {
               injectedSetters,
             }

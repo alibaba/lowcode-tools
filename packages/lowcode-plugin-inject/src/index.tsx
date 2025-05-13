@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { plugins, setters } from '@alilc/lowcode-engine';
 import { IPublicModelPluginContext, IPublicEnumPluginRegisterLevel, IPublicTypePlugin } from '@alilc/lowcode-types';
-import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages, setInjectServerHost } from './utils';
+import { getInjectedResource, injectAssets, needInject, injectComponents, filterPackages, setInjectServerHost, type InjectOptions } from './utils';
 import { Notification } from '@alifd/next';
 import { AppInject } from './appInject';
 
 let injectedPluginConfigMap = null;
 let injectedPlugins = [];
 
-export async function getInjectedPlugin(name: string, ctx: IPublicModelPluginContext) {
+export async function getInjectedPlugin(name: string, ctx: IPublicModelPluginContext, injectOptions?: InjectOptions) {
   if (!injectedPluginConfigMap) {
     injectedPluginConfigMap = {};
-    injectedPlugins = await getInjectedResource('plugin');
+    injectedPlugins = await getInjectedResource('plugin', injectOptions);
     if (injectedPlugins && injectedPlugins.length > 0) {
       injectedPlugins.forEach((item: any) => {
         let pluginName = item.module?.pluginName;
@@ -27,11 +27,12 @@ export async function getInjectedPlugin(name: string, ctx: IPublicModelPluginCon
   return injectedPluginConfigMap[name];
 }
 
-interface IOptions {
+interface IOptions extends InjectOptions {
   injectServerHost?: string;
 }
 
 const Inject = (ctx: IPublicModelPluginContext, options: IOptions = {}) => {
+  const { injectServerHost, ...injectOptions } = options;
   if (!needInject) {
     return {
       init() {}
@@ -56,7 +57,7 @@ const Inject = (ctx: IPublicModelPluginContext, options: IOptions = {}) => {
       // 兼容逻辑
       pluginName = (pluginConfig as any).name;
     }
-    const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx);
+    const injectedSameNamePlugin = await getInjectedPlugin(pluginName, ctx, injectOptions);
     if (injectedSameNamePlugin) {
       injectedPluginConfigMap[pluginName] = null;
       return originalRegister.call(this, injectedSameNamePlugin, pluginOptions, options);
@@ -85,7 +86,7 @@ const Inject = (ctx: IPublicModelPluginContext, options: IOptions = {}) => {
           }
         });
       }
-      const injectedSetters = await getInjectedResource('vs');
+      const injectedSetters = await getInjectedResource('vs', injectOptions);
       injectedSetters.forEach((item) => {
         setters.registerSetter(item.module.displayName, item.module);
       });
