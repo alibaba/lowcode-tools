@@ -18,6 +18,7 @@ const { debug } = console;
 
 const UTILS = require('./utils');
 const CONSTANTS = require('./constants');
+const EXTERNALS = require('./externals');
 const { installModule } = require('./utils/npm');
 const userWebpackConfig = require('./config/user-config');
 
@@ -292,7 +293,7 @@ async function build(options, pluginOptions, execCompile) {
     }),
   );
   const metaPathMap = {};
-  metaPaths.forEach((item) => {    
+  metaPaths.forEach((item) => {
     metaPathMap[path.basename(item).replace(path.extname(item), '')] = item;
     // metaPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
   });
@@ -504,7 +505,11 @@ async function start(options, pluginOptions) {
         },
       });
     }
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     !disableStyleLoader && useStyleLoader(config);
     if (baseLibrary === 'rax') {
       config.module.rule('scss').use('rpx-loader').loader('rpx-loader').before('css-loader');
@@ -707,7 +712,11 @@ async function bundleMetaV2(options, pluginOptions, execCompile, metaType) {
     });
     config.output.library(metaExportName).libraryTarget('umd');
     config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     useStyleLoader(config);
   });
   return metaPath;
@@ -915,7 +924,11 @@ async function bundleEditorView(
     });
     config.output.library(library).libraryTarget('umd');
     config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     if (baseLibrary === 'rax') {
       const scssRule = config.module.rule('scss');
       scssRule.use('rpx-loader').loader('rpx-loader').before('css-loader');
@@ -997,7 +1010,11 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
     });
     config.output.library(library).libraryTarget('umd');
     config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}/render/${platform}`));
-    config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+    let ext = externals || [];
+    if(!Array.isArray(ext)) {
+      ext = [ externals ];
+    }
+    config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
     if (baseLibrary === 'rax') {
       const scssRule = config.module.rule('scss');
       scssRule.use('rpx-loader').loader('rpx-loader').before('css-loader');
@@ -1288,7 +1305,11 @@ async function bundleComponentMeta(webPackConfig, options, pluginOptions, execCo
         });
         config.output.library(componentMetaExportName).libraryTarget('umd');
         config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
-        config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
+        let ext = externals || [];
+        if(!Array.isArray(ext)) {
+          ext = [ externals ];
+        }
+        config.externals([...EXTERNALS, COMMON_EXTERNALS_MAP[engineScope], ...ext]);
         useStyleLoader(config);
       });
     })(component, idx);
