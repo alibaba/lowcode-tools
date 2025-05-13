@@ -292,7 +292,7 @@ async function build(options, pluginOptions, execCompile) {
     }),
   );
   const metaPathMap = {};
-  metaPaths.forEach((item) => {    
+  metaPaths.forEach((item) => {
     metaPathMap[path.basename(item).replace(path.extname(item), '')] = item;
     // metaPathMap[item.slice(item.lastIndexOf('/') + 1, item.lastIndexOf('.'))] = item;
   });
@@ -509,6 +509,8 @@ async function start(options, pluginOptions) {
     if (baseLibrary === 'rax') {
       config.module.rule('scss').use('rpx-loader').loader('rpx-loader').before('css-loader');
     }
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, 'lowcode-dev');
   });
 }
 
@@ -709,6 +711,9 @@ async function bundleMetaV2(options, pluginOptions, execCompile, metaType) {
     config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
     config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
     useStyleLoader(config);
+
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, `lowcode-meta-${metaType}`);
   });
   return metaPath;
 }
@@ -920,6 +925,8 @@ async function bundleEditorView(
       const scssRule = config.module.rule('scss');
       scssRule.use('rpx-loader').loader('rpx-loader').before('css-loader');
     }
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, 'lowcode-editor-view');
   });
   return viewPath;
 }
@@ -1002,6 +1009,8 @@ async function bundleRenderView(options, pluginOptions, platform, execCompile) {
       const scssRule = config.module.rule('scss');
       scssRule.use('rpx-loader').loader('rpx-loader').before('css-loader');
     }
+    const chain = options.context.userConfig.chainWebpack;
+    if(chain) chain(config, `render-view-${platform}`);
   });
   return viewPath;
 }
@@ -1290,6 +1299,9 @@ async function bundleComponentMeta(webPackConfig, options, pluginOptions, execCo
         config.output.path(path.resolve(rootDir, `${buildTarget}/${lowcodeDir}`));
         config.externals({ ...COMMON_EXTERNALS_MAP[engineScope], ...externals });
         useStyleLoader(config);
+
+        const chain = options.context.userConfig.chainWebpack;
+        if(chain) chain(config, taskName);
       });
     })(component, idx);
   });
